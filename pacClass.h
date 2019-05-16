@@ -1,3 +1,5 @@
+#define__pacman_h
+#ifndef__pacman_h
 #include <iostream.h>
 #include <graphics.h>
 #include <stdlib.h>
@@ -236,10 +238,46 @@ class Pacman: public Character{
 	void pacDraw(char direction);
 	//passes direction as parameter and updates Xco and Yco of pacman
 	void pacMove(char direction);
+	//Erases a pacman at particular coordinates
+	void pacErase(int xco, int yco);
 };
 
 void Pacman:: pacDraw(char direction)
 {
 	tolower(direction);
-	if
+	//Direction is w for up, a for left, s for down and d for right, sector is drawn with mouth in the direction
+	if (direction == 'w'){
+		setcolor(YELLOW);
+		setfillstyle(SOLID_FILL,YELLOW);
+		fillellipse(getXco(),getYco(),4,4);
+		//sector will be black and create the mouth by shading the ellipse
+		setcolor(BLACK);
+		setfillstyle(SOLID_FILL,BLACK);
+		sector(getXco(),getYco(),135,45,4,4);
+	}
+	else if (direction == 'a'){
+		setcolor(YELLOW);
+		setfillstyle(SOLID_FILL,YELLOW);
+		fillellipse(getXco(),getYco(),4,4);
+		//sector will be black and create the mouth by shading the ellipse
+		setcolor(BLACK);
+		setfillstyle(SOLID_FILL,BLACK);
+		sector(getXco(),getYco(),225,135,4,4);
+	}
+	else if (direction == 's'){
+		setcolor(YELLOW);
+		setfillstyle(SOLID_FILL,YELLOW);
+		fillellipse(getXco(),getYco(),4,4);
+		//sector will be black and create the mouth by shading the ellipse
+		setcolor(BLACK);
+		setfillstyle(SOLID_FILL,BLACK);
+		sector(getXco(),getYco(),315,235,4,4);	
+	}
+	else if (direction == 'd'){
+		setcolor(YELLOW);
+		setfillstyle(SOLID_FILL,YELLOW);
+		sector(getXco(),getYco(),45,315,4,4);
+	}
 }
+
+#endif
