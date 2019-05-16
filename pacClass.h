@@ -8,7 +8,10 @@
 #include <dos.h>
 #include <ctype.h>
 
+#define PACSTARTXCO 305
+#define PACSTARTYCO 260
 
+//In pacman main function, remember to reset powerpellet back to 0 after 25 sets of moves so use a counter!!
 
 //array that stores map positions, 0 for walls, 1 for pellets, 2 for power pellet, 3 for teleport places, 4 for empty space
 int mapCo[32][28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -202,13 +205,14 @@ void map()
 
 
 //Character class is super class for pacman class and ghost class
-class character {
+class Character {
 	protected:
 	int xco;
 	int yco;
 	//When this value changes, it is reflected for all the ghosts and pacman
 	static int powerPellet;
 	public:
+	//get and set functios
 	int getXco(){
 		return xco;
 	}
@@ -227,6 +231,15 @@ class character {
 	int setPowerPellet(int newPellet){
 		powerPellet = newPellet;
 	}
+	//Constructor for Character class, parametrised with xco and yco values passed
+	Character (int newXco, int newYco){
+		xco = newXco;
+		yco = newYco;
+		powerPellet = 0;
+	}
+	//Destructor
+	~Character (){
+	}
 };
 
 //Class for pacman objects, derived class of Character
@@ -239,45 +252,210 @@ class Pacman: public Character{
 	//passes direction as parameter and updates Xco and Yco of pacman
 	void pacMove(char direction);
 	//Erases a pacman at particular coordinates
-	void pacErase(int xco, int yco);
+	void pacErase();
+	//Get and Set functions for Pacman exclusive data members
+	int getScore(){
+		return score;
+	}
+	int getLife(){
+		return life;
+	}
+	int setScore(int newScore){
+		score = newScore;
+	}
+	int setLife(int newLife){
+		life = newLife;
+	}
+	//Constructor of pacman class
+	Pacman():Character(PACSTARTXCO,PACSTARTYCO){
+		score = 0;
+		life = 3;
+	}
+	//Destructor
+	~Pacman(){
+	}
 };
 
-void Pacman:: pacDraw(char direction)
-{
+void Pacman::pacErase(){
+	//shades the pac man region black and hence erases it
+	setcolor(BLACK);
+	setfillstyle(SOLID_FILL, BLACK);
+	fillellipse(getXco(), getYco(), 4, 4);
+}
+
+void Pacman::pacDraw(char direction){
+	//converts the direction to lowercase character
 	tolower(direction);
 	//Direction is w for up, a for left, s for down and d for right, sector is drawn with mouth in the direction
 	if (direction == 'w'){
 		setcolor(YELLOW);
-		setfillstyle(SOLID_FILL,YELLOW);
-		fillellipse(getXco(),getYco(),4,4);
+		setfillstyle(SOLID_FILL, YELLOW);
+		fillellipse(getXco(), getYco(), 4, 4);
 		//sector will be black and create the mouth by shading the ellipse
 		setcolor(BLACK);
-		setfillstyle(SOLID_FILL,BLACK);
-		sector(getXco(),getYco(),135,45,4,4);
+		setfillstyle(SOLID_FILL, BLACK);
+		sector(getXco(), getYco(), 135, 45, 4, 4);
 	}
 	else if (direction == 'a'){
 		setcolor(YELLOW);
-		setfillstyle(SOLID_FILL,YELLOW);
-		fillellipse(getXco(),getYco(),4,4);
+		setfillstyle(SOLID_FILL, YELLOW);
+		fillellipse(getXco(), getYco(), 4, 4);
 		//sector will be black and create the mouth by shading the ellipse
 		setcolor(BLACK);
-		setfillstyle(SOLID_FILL,BLACK);
-		sector(getXco(),getYco(),225,135,4,4);
+		setfillstyle(SOLID_FILL, BLACK);
+		sector(getXco(), getYco(), 225, 135, 4, 4);
 	}
 	else if (direction == 's'){
 		setcolor(YELLOW);
-		setfillstyle(SOLID_FILL,YELLOW);
-		fillellipse(getXco(),getYco(),4,4);
+		setfillstyle(SOLID_FILL, YELLOW);
+		fillellipse(getXco(), getYco(), 4, 4);
 		//sector will be black and create the mouth by shading the ellipse
 		setcolor(BLACK);
-		setfillstyle(SOLID_FILL,BLACK);
-		sector(getXco(),getYco(),315,235,4,4);	
+		setfillstyle(SOLID_FILL, BLACK);
+		sector(getXco(), getYco(), 315, 235, 4, 4);	
 	}
 	else if (direction == 'd'){
 		setcolor(YELLOW);
-		setfillstyle(SOLID_FILL,YELLOW);
-		sector(getXco(),getYco(),45,315,4,4);
+		setfillstyle(SOLID_FILL, YELLOW);
+		sector(getXco(), getYco(), 45, 315, 4, 4);
 	}
+}
+
+void Pacman::pacMove(char direction){
+	//converts the direction to lowercase hence negating any accidental uppercase characters
+	tolower(direction);
+	//creating counter for cases when move is blocked by walls
+	int counter;
+	//creating array coordinates
+	int i,j;
+	//Direction is w for up, a for left, s for down and d for right, each move is ten spaces
+	if (direction == 'w'){
+		//Checking array position of new position after move
+		i = convertXco(getXco());
+		j = convertYco(getYco()+10);
+		//Setting counter to map value of array
+		counter = mapCo[i][j]
+		//If array coordinate is not wall, then move
+		if (counter != 0){
+			//erasing previous position
+			pacErase();
+			//decrement xco to move left
+			setXco(getXco()-10);
+			//drawing pacman at new position
+			pacDraw(direction);
+			//Checking if pellet or powerPellet at the new position
+			if (counter == 1){
+				//increase score by 10 for normal pellet
+				setScore(getScore() + 10);
+			}
+			else if (counter == 2){
+				//increase score by 50 for power pellet
+				setScore(getScore() + 50);
+				//set powerPellet to 1
+				setPowerPellet(1);
+			}
+		}
+	}
+	else if (direction == 'a'){
+		//Checking array position of new position after move
+		i = convertXco(getXco() - 10);
+		j = convertYco(getYco());
+		//Setting counter to map value of array
+		counter = mapCo[i][j]
+		//If array coordinate is not wall or teleport point, then move ten spaces
+		if (counter != 0 && counter != 3){
+			//erasing previous position
+			pacErase();
+			//decrement xco to move left
+			setXco(getXco()-10);
+			//drawing pacman at new position
+			pacDraw(direction);
+			//Checking if pellet or powerPellet at the new position
+			if (counter == 1){
+				//increase score by 10 for normal pellet
+				setScore(getScore() + 10);
+			}
+			else if (counter == 2){
+				//increase score by 50 for power pellet
+				setScore(getScore() + 50);
+				//set powerPellet to 1
+				setPowerPellet(1);
+			}
+		}
+		//If it is teleport point, xco changes to 435, yco stays the same
+		if (counter == 3){
+			//erasing previous position
+			pacErase();
+			//change Xco 
+			setXco(435);
+			//draw pacman at new position
+			pacDraw(direction);
+		}
+	}
+	else if (direction == 's'){
+		//Checking array position of new position after move
+		i = convertXco(getXco());
+		j = convertYco(getYco() - 10);
+		//Setting counter to map value of array
+		counter = mapCo[i][j]
+		//If array coordinate is not wall, then move
+		if (counter != 0){
+			//erasing previous position
+			pacErase();
+			//decrement xco to move left
+			setXco(getXco()-10);
+			//drawing pacman at new position
+			pacDraw(direction);
+			//Checking if pellet or powerPellet at the new position
+			if (counter == 1){
+				//increase score by 10 for normal pellet
+				setScore(getScore() + 10);
+			}
+			else if (counter == 2){
+				//increase score by 50 for power pellet
+				setScore(getScore() + 50);
+				//set powerPellet to 1
+				setPowerPellet(1);
+			}
+		}
+	}
+	else if (direction == 'd'){
+		//Checking array position of new position after move
+		i = convertXco(getXco() + 10);
+		j = convertYco(getYco());
+		//Setting counter to map value of array
+		counter = mapCo[i][j]
+		//If array coordinate is not wall or teleport point, then move 10 spaces
+		if (counter != 0 && counter != 3){
+			//erasing previous position
+			pacErase();
+			//decrement xco to move left
+			setXco(getXco()-10);
+			//drawing pacman at new position
+			pacDraw(direction);
+			//Checking if pellet or powerPellet at the new position
+			if (counter == 1){
+				//increase score by 10 for normal pellet
+				setScore(getScore() + 10);
+			}
+			else if (counter == 2){
+				//increase score by 50 for power pellet
+				setScore(getScore() + 50);
+				//set powerPellet to 1
+				setPowerPellet(1);
+			}
+		}
+		//If it is teleport point, xco changes to 185, yco stays the same
+		if (counter == 3){
+			//erasing previous position
+			pacErase();
+			//change Xco 
+			setXco(185);
+			//draw pacman at new position
+			pacDraw(direction);
+		}
+	}
+	
 }
 
 #endif
