@@ -212,6 +212,15 @@ class Character {
 	//When this value changes, it is reflected for all the ghosts and pacman
 	static int powerPellet;
 	public:
+	//Constructor for Character class, parametrised with xco and yco values passed
+	Character (int newXco, int newYco){
+		xco = newXco;
+		yco = newYco;
+		powerPellet = 0;
+	}
+	//Destructor
+	~Character (){
+	}
 	//get and set functios
 	int getXco(){
 		return xco;
@@ -231,15 +240,6 @@ class Character {
 	int setPowerPellet(int newPellet){
 		powerPellet = newPellet;
 	}
-	//Constructor for Character class, parametrised with xco and yco values passed
-	Character (int newXco, int newYco){
-		xco = newXco;
-		yco = newYco;
-		powerPellet = 0;
-	}
-	//Destructor
-	~Character (){
-	}
 };
 
 //Class for pacman objects, derived class of Character
@@ -247,6 +247,14 @@ class Pacman: public Character{
 	int score;
 	int life;
 	public:
+	//Constructor of pacman class
+	Pacman():Character(PACSTARTXCO,PACSTARTYCO){
+		score = 0;
+		life = 3;
+	}
+	//Destructor
+	~Pacman(){
+	}
 	//Draws pacman with direction as parameter
 	void pacDraw(char direction);
 	//passes direction as parameter and updates Xco and Yco of pacman
@@ -266,14 +274,31 @@ class Pacman: public Character{
 	int setLife(int newLife){
 		life = newLife;
 	}
-	//Constructor of pacman class
-	Pacman():Character(PACSTARTXCO,PACSTARTYCO){
-		score = 0;
-		life = 3;
+};
+
+//class for ghost objects, derived class of character class
+class Ghost: public Character{
+	//four ghost colors: r-Red, c-Cyan, m-Magenta, b-brown
+	char color;
+	char newDirection;
+	char prevInvalidMove;
+	public:
+	//Constructor of ghost class, accepts xco, yco and color
+	Ghost(int xco, int yco, char newColor):Character(xco,yco){
+		color = newColor;
+		newDirection = 'd';
+		prevInvalidMove = 'a';
 	}
-	//Destructor
-	~Pacman(){
+	//Destructor of ghost class
+	~Ghost(){
 	}
+	//Erases a ghost at particular coordinates
+	void ghostErase();
+	//Draws a ghost at particular coordinates
+	void ghostDraw();
+	//Moves the ghost in particular direction
+	void ghostMove();
+	
 };
 
 void Pacman::pacErase(){
@@ -339,18 +364,22 @@ void Pacman::pacMove(char direction){
 		if (counter != 0){
 			//erasing previous position
 			pacErase();
-			//decrement xco to move left
-			setXco(getXco()-10);
+			//increment yco to move up
+			setYco(getYco() + 10);
 			//drawing pacman at new position
 			pacDraw(direction);
 			//Checking if pellet or powerPellet at the new position
 			if (counter == 1){
 				//increase score by 10 for normal pellet
 				setScore(getScore() + 10);
+				//set that map coordinate to reflect empty space as pellet is eaten
+				mapCo[i][j] = 4;
 			}
 			else if (counter == 2){
 				//increase score by 50 for power pellet
 				setScore(getScore() + 50);
+				//set that map coordinate to reflect empty space as pellet is eaten
+				mapCo[i][j] = 4;
 				//set powerPellet to 1
 				setPowerPellet(1);
 			}
@@ -374,10 +403,14 @@ void Pacman::pacMove(char direction){
 			if (counter == 1){
 				//increase score by 10 for normal pellet
 				setScore(getScore() + 10);
+				//set that map coordinate to reflect empty space as pellet is eaten
+				mapCo[i][j] = 4;
 			}
 			else if (counter == 2){
 				//increase score by 50 for power pellet
 				setScore(getScore() + 50);
+				//set that map coordinate to reflect empty space as pellet is eaten
+				mapCo[i][j] = 4;
 				//set powerPellet to 1
 				setPowerPellet(1);
 			}
@@ -402,18 +435,22 @@ void Pacman::pacMove(char direction){
 		if (counter != 0){
 			//erasing previous position
 			pacErase();
-			//decrement xco to move left
-			setXco(getXco()-10);
+			//decrement yco to move down
+			setYco(getYco() - 10);
 			//drawing pacman at new position
 			pacDraw(direction);
 			//Checking if pellet or powerPellet at the new position
 			if (counter == 1){
 				//increase score by 10 for normal pellet
 				setScore(getScore() + 10);
+				//set that map coordinate to reflect empty space as pellet is eaten
+				mapCo[i][j] = 4;
 			}
 			else if (counter == 2){
 				//increase score by 50 for power pellet
 				setScore(getScore() + 50);
+				//set that map coordinate to reflect empty space as pellet is eaten
+				mapCo[i][j] = 4;
 				//set powerPellet to 1
 				setPowerPellet(1);
 			}
@@ -429,18 +466,22 @@ void Pacman::pacMove(char direction){
 		if (counter != 0 && counter != 3){
 			//erasing previous position
 			pacErase();
-			//decrement xco to move left
-			setXco(getXco()-10);
+			//increment xco to move right
+			setXco(getXco() + 10);
 			//drawing pacman at new position
 			pacDraw(direction);
 			//Checking if pellet or powerPellet at the new position
 			if (counter == 1){
 				//increase score by 10 for normal pellet
 				setScore(getScore() + 10);
+				//set that map coordinate to reflect empty space as pellet is eaten
+				mapCo[i][j] = 4;
 			}
 			else if (counter == 2){
 				//increase score by 50 for power pellet
 				setScore(getScore() + 50);
+				//set that map coordinate to reflect empty space as pellet is eaten
+				mapCo[i][j] = 4;
 				//set powerPellet to 1
 				setPowerPellet(1);
 			}
@@ -453,6 +494,200 @@ void Pacman::pacMove(char direction){
 			setXco(185);
 			//draw pacman at new position
 			pacDraw(direction);
+		}
+	}
+	
+}
+
+void Ghost::ghostErase(){
+	setcolor(BLACK);
+	setfillstyle(SOLID_FILL, BLACK);
+	//creating array to store rectangle coordinates
+	int poly[8];
+	//ghost is ellipse plus a rectangle to create the ghost look, so to erase the coordinates are shaded black
+	poly[0] = xco - 4;
+	poly[1] = yco;
+	poly[2] = xco + 4;
+	poly[3] = yco;
+	poly[4] = xco + 4;
+	poly[5] = yco + 4;
+	poly[6] = xco - 4;
+	poly[7] = yco + 4;
+	//draws the rectangle, poly elements are xco and yco of vertices
+	fillpoly(4, poly);
+	//draws the ellipse
+	fillellipse(xco, yco, 4, 4);
+}
+
+void Ghost::ghostDraw(){
+	//creating array to store rectangle coordinates
+	int poly[8];
+	//Checking the color to set appropriate color
+	if (color == 'r'){
+		setcolor(RED);
+		setfillstyle(SOLID_FILL, RED);
+	}
+	else if (color == 'c'){
+		setcolor(CYAN);
+		setfillstyle(SOLID_FILL, CYAN);
+	}
+	else if (color == 'm'){
+		setcolor(MAGENTA);
+		setfillstyle(SOLID_FILL, MAGENTA);
+	}
+	else if (color == 'b'){
+		setcolor(BROWN);
+		setfillstyle(SOLID_FILL, BROWN);
+	}
+	//ghost is ellipse plus a rectangle to create the ghost look
+	poly[0] = xco - 4;
+	poly[1] = yco;
+	poly[2] = xco + 4;
+	poly[3] = yco;
+	poly[4] = xco + 4;
+	poly[5] = yco + 4;
+	poly[6] = xco - 4;
+	poly[7] = yco + 4;
+	//draws the rectangle, poly elements are xco and yco of vertices
+	fillpoly(4, poly);
+	//draws the ellipse
+	fillellipse(xco, yco, 4, 4);
+}
+
+void Ghost::ghostMove(){
+	//creating counter for cases when move is blocked by walls and creating another counter to determine next move
+	int counter, newMove;
+	//creating array coordinates
+	int i,j;
+	//Direction is w for up, a for left, s for down and d for right, each move is ten spaces
+	if (newDirection == 'w'){
+		//Checking array position of new position after move
+		i = convertXco(xco);
+		j = convertYco(yco + 10);
+		//Setting counter to map value of array
+		counter = mapCo[i][j]
+		//If array coordinate is not wall, then move
+		if (counter != 0){
+			//erasing previous position
+			ghostErase();
+			//increment yco to move up
+			setYco(getYco() + 10);
+			//drawing ghost at new position
+			ghostDraw();
+		}
+		else {
+			//Path blocked, choose new path
+			newMove = random(2);
+			if (newMove == 0){
+				newDirection = 'a';
+				prevInvalidMove = 'w';
+			}
+			else {
+				newDirection = 'd';
+				prevInvalidMove = 'w';
+			}
+		}
+	}
+	else if (newDirection == 'a'){
+		//Checking array position of new position after move
+		i = convertXco(getXco() - 10);
+		j = convertYco(getYco());
+		//Setting counter to map value of array
+		counter = mapCo[i][j]
+		//If array coordinate is not wall or teleport point, then move ten spaces
+		if (counter != 0 && counter != 3){
+			//erasing previous position
+			ghostErase();
+			//decrement xco to move left
+			setXco(getXco()-10);
+			//drawing ghost at new position
+			ghostDraw();
+		}
+		//If it is teleport point, xco changes to 435, yco stays the same
+		else if (counter == 3){
+			//erasing previous position
+			ghostErase();
+			//change Xco 
+			setXco(435);
+			//draw pacman at new position
+			ghostDraw(direction);
+		}
+		else {
+			//Path blocked, choose new path
+			newMove = random(2);
+			if (newMove == 0){
+				newDirection = 'w';
+				prevInvalidMove = 'a';
+			}
+			else {
+				newDirection = 's';
+				prevInvalidMove = 'a';
+			}
+		}
+	}
+	else if (newDirection == 's'){
+		//Checking array position of new position after move
+		i = convertXco(getXco());
+		j = convertYco(getYco() - 10);
+		//Setting counter to map value of array
+		counter = mapCo[i][j]
+		//If array coordinate is not wall, then move
+		if (counter != 0){
+			//erasing previous position
+			ghostErase();
+			//decrement yco to move down
+			setYco(getYco() - 10);
+			//drawing ghost at new position
+			ghostDraw();
+		}
+		else {
+			//Path blocked, choose new path
+			newMove = random(2);
+			if (){
+				newDirection = 'a';
+				prevInvalidMove = 's';
+			}
+			else {
+				newDirection = 'd';
+				prevInvalidMove = 's';
+			}
+		}
+	}
+	else if (newDirection == 'd'){
+		//Checking array position of new position after move
+		i = convertXco(getXco() + 10);
+		j = convertYco(getYco());
+		//Setting counter to map value of array
+		counter = mapCo[i][j]
+		//If array coordinate is not wall or teleport point, then move 10 spaces
+		if (counter != 0 && counter != 3){
+			//erasing previous position
+			ghostErase();
+			//increment xco to move right
+			setXco(getXco() + 10);
+			//drawing ghost at new position
+			ghostDraw();
+		}
+		//If it is teleport point, xco changes to 185, yco stays the same
+		else if (counter == 3){
+			//erasing previous position
+			ghostErase();
+			//change Xco 
+			setXco(435);
+			//draw pacman at new position
+			ghostDraw(direction);
+		}
+		else {
+			//Path blocked, choose new path
+			newMove = random(2);
+			if (newMove == 0){
+				newDirection = 'w';
+				prevInvalidMove = 'd';
+			}
+			else {
+				newDirection = 's';
+				prevInvalidMove = 'd';
+			}
 		}
 	}
 	
