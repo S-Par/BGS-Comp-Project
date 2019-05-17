@@ -201,6 +201,28 @@ void map()
    Poly[7]=260;
    fillpoly(4, poly);
    fillpoly(4, Poly);
+   //declaring xco and yco for pellet locations
+   int xco, yco;
+   //drawing the pellets and power-pellets
+   for (int i = 0; i < 32; i++){
+	   for (int j = 0; j < 28; j++){
+		   if (mapCo[i][j] == 1){
+			   setcolor(YELLOW);
+			   setfillstyle(SOLID_FILL, MAGENTA);
+			   xco = j * 10 + 175;
+			   yco = i * 10 + 90;
+			   fillellipse(xco, yco, 1, 1);
+			   
+		   }
+		   else if (mapCo[i][j] == 2){
+			   setcolor(YELLOW);
+			   setfillstyle(SOLID_FILL, MAGENTA);
+			   xco = j * 10 + 175;
+			   yco = i * 10 + 90;
+			   fillellipse(xco, yco, 2, 2);
+		   }
+	   }
+   }
 }
 
 
