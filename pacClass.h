@@ -49,11 +49,11 @@ int mapCo[32][28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 //Functions to convert xco and yco to array coordinates
-int convertXCo(int xco){
+int convertXco(int xco){
 	return (xco-175)/10;
 }
 
-int convertYCo(int yco){
+int convertYco(int yco){
 	return (yco-90)/10;
 }
 
