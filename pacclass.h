@@ -232,8 +232,7 @@ class Character {
 	protected:
 	int xco;
 	int yco;
-	//When this value changes, it is reflected for all the ghosts and pacman
-	static int powerPellet;
+	int powerPellet;
 	public:
 	//Constructor for Character class, parametrised with xco and yco values passed
 	Character (int newXco, int newYco){
@@ -254,13 +253,13 @@ class Character {
 	int getPowerPellet(){
 		return powerPellet;
 	}
-	int setXco(int newXco){
+	void setXco(int newXco){
 		xco = newXco;
 	}
-	int setYco(int newYco){
+	void setYco(int newYco){
 		yco = newYco;
 	}
-	int setPowerPellet(int newPellet){
+	void setPowerPellet(int newPellet){
 		powerPellet = newPellet;
 	}
 };
@@ -291,10 +290,10 @@ class Pacman: public Character{
 	int getLife(){
 		return life;
 	}
-	int setScore(int newScore){
+	void setScore(int newScore){
 		score = newScore;
 	}
-	int setLife(int newLife){
+	void setLife(int newLife){
 		life = newLife;
 	}
 };
@@ -321,7 +320,7 @@ class Ghost: public Character{
 	void ghostDraw();
 	//Moves the ghost in particular direction
 	void ghostMove();
-	
+
 };
 
 void Pacman::pacErase(){
@@ -360,7 +359,7 @@ void Pacman::pacDraw(char direction){
 		//sector will be black and create the mouth by shading the ellipse
 		setcolor(BLACK);
 		setfillstyle(SOLID_FILL, BLACK);
-		sector(getXco(), getYco(), 315, 235, 4, 4);	
+		sector(getXco(), getYco(), 315, 235, 4, 4);
 	}
 	else if (direction == 'd'){
 		setcolor(YELLOW);
@@ -382,7 +381,7 @@ void Pacman::pacMove(char direction){
 		i = convertXco(getXco());
 		j = convertYco(getYco()+10);
 		//Setting counter to map value of array
-		counter = mapCo[i][j]
+		counter = mapCo[i][j];
 		//If array coordinate is not wall, then move
 		if (counter != 0){
 			//erasing previous position
@@ -413,7 +412,7 @@ void Pacman::pacMove(char direction){
 		i = convertXco(getXco() - 10);
 		j = convertYco(getYco());
 		//Setting counter to map value of array
-		counter = mapCo[i][j]
+		counter = mapCo[i][j];
 		//If array coordinate is not wall or teleport point, then move ten spaces
 		if (counter != 0 && counter != 3){
 			//erasing previous position
@@ -453,7 +452,7 @@ void Pacman::pacMove(char direction){
 		i = convertXco(getXco());
 		j = convertYco(getYco() - 10);
 		//Setting counter to map value of array
-		counter = mapCo[i][j]
+		counter = mapCo[i][j];
 		//If array coordinate is not wall, then move
 		if (counter != 0){
 			//erasing previous position
@@ -484,7 +483,7 @@ void Pacman::pacMove(char direction){
 		i = convertXco(getXco() + 10);
 		j = convertYco(getYco());
 		//Setting counter to map value of array
-		counter = mapCo[i][j]
+		counter = mapCo[i][j];
 		//If array coordinate is not wall or teleport point, then move 10 spaces
 		if (counter != 0 && counter != 3){
 			//erasing previous position
@@ -513,16 +512,17 @@ void Pacman::pacMove(char direction){
 		if (counter == 3){
 			//erasing previous position
 			pacErase();
-			//change Xco 
+			//change Xco
 			setXco(185);
 			//draw pacman at new position
 			pacDraw(direction);
 		}
 	}
-	
+
 }
 
-void Ghost::ghostErase(){
+void Ghost::ghostErase() {
+
 	setcolor(BLACK);
 	setfillstyle(SOLID_FILL, BLACK);
 	//creating array to store rectangle coordinates
@@ -588,7 +588,7 @@ void Ghost::ghostMove(){
 		i = convertXco(xco);
 		j = convertYco(yco + 10);
 		//Setting counter to map value of array
-		counter = mapCo[i][j]
+		counter = mapCo[i][j];
 		//If array coordinate is not wall, then move
 		if (counter != 0){
 			//erasing previous position
@@ -616,7 +616,7 @@ void Ghost::ghostMove(){
 		i = convertXco(getXco() - 10);
 		j = convertYco(getYco());
 		//Setting counter to map value of array
-		counter = mapCo[i][j]
+		counter = mapCo[i][j];
 		//If array coordinate is not wall or teleport point, then move ten spaces
 		if (counter != 0 && counter != 3){
 			//erasing previous position
@@ -632,8 +632,8 @@ void Ghost::ghostMove(){
 			ghostErase();
 			//change Xco 
 			setXco(435);
-			//draw pacman at new position
-			ghostDraw(direction);
+			//draw ghost at new position
+			ghostDraw();
 		}
 		else {
 			//Path blocked, choose new path
@@ -653,7 +653,7 @@ void Ghost::ghostMove(){
 		i = convertXco(getXco());
 		j = convertYco(getYco() - 10);
 		//Setting counter to map value of array
-		counter = mapCo[i][j]
+		counter = mapCo[i][j];
 		//If array coordinate is not wall, then move
 		if (counter != 0){
 			//erasing previous position
@@ -666,7 +666,7 @@ void Ghost::ghostMove(){
 		else {
 			//Path blocked, choose new path
 			newMove = random(2);
-			if (){
+			if (newMove == 0){
 				newDirection = 'a';
 				prevInvalidMove = 's';
 			}
@@ -681,7 +681,7 @@ void Ghost::ghostMove(){
 		i = convertXco(getXco() + 10);
 		j = convertYco(getYco());
 		//Setting counter to map value of array
-		counter = mapCo[i][j]
+		counter = mapCo[i][j];
 		//If array coordinate is not wall or teleport point, then move 10 spaces
 		if (counter != 0 && counter != 3){
 			//erasing previous position
@@ -697,8 +697,8 @@ void Ghost::ghostMove(){
 			ghostErase();
 			//change Xco 
 			setXco(435);
-			//draw pacman at new position
-			ghostDraw(direction);
+			//draw ghost at new position
+			ghostDraw();
 		}
 		else {
 			//Path blocked, choose new path
