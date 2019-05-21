@@ -14,6 +14,7 @@
 //In pacman main function, remember to reset powerpellet back to 0 after 25 sets of moves so use a counter!!
 
 //array that stores map positions, 0 for walls, 1 for pellets, 2 for power pellet, 3 for teleport places, 4 for empty space
+//For reference, map rows are numbered from A to 6, column are from a to 2
 int mapCo[32][28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		   0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,
 		   0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,
