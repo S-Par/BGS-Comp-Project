@@ -1,5 +1,5 @@
-#define__pacman_h
-#ifndef__pacman_h
+#ifndef__pacclass_h
+#define__pacclass_h
 #include <iostream.h>
 #include <graphics.h>
 #include <stdlib.h>
