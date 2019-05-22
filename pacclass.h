@@ -1,3 +1,7 @@
+// Pacclass.h
+//Created by Siddharth Parmar
+//Contains all functionality for pacman implementation.
+
 #ifndef__pacclass_h
 #define__pacclass_h
 #include <iostream.h>
