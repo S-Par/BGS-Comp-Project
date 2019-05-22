@@ -50,12 +50,140 @@ int mapCo[32][28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 
 //Functions to convert xco and yco to array coordinates
 int convertXco(int xco){
-	return (xco-175)/10;
+	return (xco-175) / 10;
 }
 
 int convertYco(int yco){
-	return (yco-90)/10;
+	return (yco-90) / 10;
 }
+
+//Function for the introduction to pacman (non-graphics)
+void introduction()
+{
+	clrscr();
+	//creates a text window
+	window(20, 2, 63, 25);
+	//sets textcolor to yellow
+	textcolor(30);
+	cprintf("   ########   ########### ###########\r\n");delay(300);
+	cprintf("   ###    ##  ####   #### ###########\r\n");delay(300);
+	cprintf("   ###    ### ####   #### ####\r\n");delay(300);
+	cprintf("   ########   ########### ####\r\n");delay(300);
+	cprintf("   #####      ########### ####\r\n");delay(300);
+	cprintf("   #####      ####   #### ###########\r\n");delay(300);
+	cprintf("   #####      ####   #### ###########\r\n\n");delay(300);
+	cprintf("#####     ##### ########### #####    ####\r\n");delay(300);
+	cprintf("############### ####   #### ######   ####\r\n");delay(300);
+	cprintf("#### ##### #### ####   #### #######  ####\r\n");delay(300);
+	cprintf("####  ###  #### ########### #############\r\n");delay(300);
+	cprintf("####   #   #### ########### ####  #######\r\n");delay(300);
+	cprintf("####       #### ####   #### ####   ######\r\n");delay(300);
+	cprintf("####       #### ####   #### ####    #####\r\n");delay(300);
+	textcolor(WHITE);
+	cprintf("Insert Coin(Press 'C')\r\n");
+	int creds=0;
+	cprintf("Credits:%d",creds);
+	//setting credit character that is accepted
+	char coin = 'd';
+	while (coin != 'C' && coin != 'c'){
+		coin=getch();
+	}
+	if(coin=='c'||coin=='C')
+	{
+		delline();
+		creds++;
+		cprintf("\rCredits:%d",creds);
+	}
+	if(creds>=1)
+	{
+		cprintf("\r\nPress any key to start the game");
+		coin=getch();
+	}
+}
+//graphics mode starts here
+//prints an instruction screen
+void instructions()
+{
+	setcolor(LIGHTGREEN);
+	settextstyle(TRIPLEX_FONT, 0, 3);
+	outtextxy(100, 60, "INSTRUCTIONS:");
+	settextstyle(TRIPLEX_FONT, 0, 1);
+	outtextxy(50, 90, "1.THIS is Pac-Man:");
+	setcolor(YELLOW);
+	setfillstyle(SOLID_FILL, YELLOW);
+	sector(230, 102, 45, 315, 4, 4);
+	setcolor(LIGHTGREEN);
+	outtextxy(50, 110, "2.The controls for moving are:(w-up,a-left,s-down,d-right)");
+	outtextxy(50, 130, "3.These are the ghosts:");
+	//printing the images of the ghosts 
+	int xco, yco, poly[8];
+	xco = 300;
+	yco = 142;
+	poly[0] = xco - 4;
+	poly[1] = yco;
+	poly[2] = xco + 4;
+	poly[3] = yco;
+	poly[4] = xco + 4;
+	poly[5] = yco + 4;
+	poly[6] = xco - 4;
+	poly[7] = yco + 4;
+	setcolor(MAGENTA);
+	setfillstyle(SOLID_FILL, MAGENTA);
+	fillellipse(xco, yco, 4, 4);
+	fillpoly(4, poly);
+	xco = 270;
+	yco = 142;
+	poly[0] = xco - 4;
+	poly[1] = yco;
+	poly[2] = xco + 4;
+	poly[3] = yco;
+	poly[4] = xco + 4;
+	poly[5] = yco + 4;
+	poly[6] = xco - 4;
+	poly[7] = yco + 4;
+	setcolor(RED);
+	setfillstyle(SOLID_FILL,RED);
+	fillellipse(xco,yco,4,4);
+	fillpoly(4,poly);
+	xco = 280;
+	yco = 142;
+	poly[0] = xco - 4;
+	poly[1] = yco;
+	poly[2] = xco + 4;
+	poly[3] = yco;
+	poly[4] = xco + 4;
+	poly[5] = yco + 4;
+	poly[6] = xco - 4;
+	poly[7] = yco + 4;
+	setcolor(CYAN);
+	setfillstyle(SOLID_FILL, CYAN);
+	fillellipse(xco, yco, 4, 4);
+	fillpoly(4, poly);
+	xco = 290;
+	yco = 142;
+	poly[0] = xco - 4;
+	poly[1] = yco;
+	poly[2] = xco + 4;
+	poly[3] = yco;
+	poly[4] = xco + 4;
+	poly[5] = yco + 4;
+	poly[6] = xco - 4;
+	poly[7] = yco + 4;
+	setcolor(BROWN);
+	setfillstyle(SOLID_FILL, BROWN);
+	fillellipse(xco, yco, 4, 4);
+	fillpoly(4, poly);
+	//back to printing text
+	setcolor(LIGHTGREEN);
+	outtextxy(50, 150, "4.TOUCH the ghosts and you'll lose a life :(");
+	outtextxy(50, 170, "5.You get 10 points for eating a normal pellet");
+	outtextxy(50, 190, "6.You get 50 points for eating the big pellets");
+	outtextxy(50, 230, "Eat all pellets to win, BEST OF LUCK");
+	outtextxy(50, 250, "Press any key to continue");
+	getch();
+	settextstyle(DEFAULT_FONT, 0, 1);
+}
+
 
 //Function to draw the pacman map
 void map()
