@@ -1,6 +1,7 @@
 // Pacclass.h
 //Created by Siddharth Parmar
 //Contains all functionality for pacman implementation.
+//introduction is only non-graphics mode function
 
 #ifndef__pacclass_h
 #define__pacclass_h
@@ -12,8 +13,13 @@
 #include <dos.h>
 #include <ctype.h>
 
+//default values of pacman xco and yco
 #define PACSTARTXCO 305
 #define PACSTARTYCO 260
+//default values of ghost xco and yco
+#define STARTGHOSTXCO 295
+#define STARTGHOSTYCO 210
+//ghost start xco values change by 10 for each ghost so set them later to that, default yco is perfect start yco
 
 //In pacman main function, remember to reset powerpellet back to 0 after 25 sets of moves so use a counter!!
 
@@ -358,7 +364,6 @@ void map()
    }
 }
 
-
 //Character class is super class for pacman class and ghost class
 class Character {
 	protected:
@@ -402,7 +407,7 @@ class Pacman: public Character{
 	int life;
 	public:
 	//Constructor of pacman class
-	Pacman():Character(PACSTARTXCO,PACSTARTYCO){
+	Pacman():Character(PACSTARTXCO, PACSTARTYCO){
 		score = 0;
 		life = 3;
 	}
@@ -437,14 +442,21 @@ class Ghost: public Character{
 	char newDirection;
 	char prevInvalidMove;
 	public:
-	//Constructor of ghost class, accepts xco, yco and color
-	Ghost(int xco, int yco, char newColor):Character(xco,yco){
-		color = newColor;
+	//Constructor of ghost class
+	Ghost():Character(STARTGHOSTXCO, STARTGHOSTYCO){
+		color = 'r';
 		newDirection = 'd';
 		prevInvalidMove = 'a';
 	}
 	//Destructor of ghost class
 	~Ghost(){
+	}
+	//Get and set functions
+	char getColor(){
+		return color;
+	}
+	void setColor(char newColor){
+		color = newColor;
 	}
 	//Erases a ghost at particular coordinates
 	void ghostErase();
@@ -846,6 +858,77 @@ void Ghost::ghostMove(){
 		}
 	}
 	
+}
+
+//function for the pacman game :)
+void pacman() {
+	//create objects of pacman and array of 4 ghost objects
+	Pacman pac;
+	Ghost ghost[4];
+	//create direction character for pacman
+	char direction = 'd';
+	//create string containing colors for each ghost
+	char colors[] = "rcmb";
+	//set proper initial values for all 4 ghosts
+	for (int i = 0; i < 4; i++) {
+		//set color
+		ghost[i].setColor(colors[i]);
+		//set only xco by incrementing by i*10, initial yco is perfect
+		ghost[i].setXco(ghost[i].getXco() + i*10);
+		//draw each ghost
+		ghost[i].ghostDraw();
+	}
+	//draw pacman
+	pac.pacDraw(direction);
+	//create int score offset to store when a ghost is eaten
+	int scoreOffset = 0;
+	//create loop of the game
+	while (pac.getLife()){
+		if (pac.getScore() == 3000){
+			//exit the loop as all pellets are eaten
+			break;
+		}
+		gotoxy(15,4);
+		printf("SCORE:");
+		printf("%d",pacMan.score);
+		setcolor(YELLOW);
+		outtextxy(255,415,"Lives:");
+		setcolor(YELLOW);
+		setfillstyle(SOLID_FILL,YELLOW);
+		sector(315,420,45,315,4,4);
+		if (pac.getLife() == 1){
+			setcolor(BLACK);
+			setfillstyle(SOLID_FILL, BLACK);
+		}
+		sector(325,420,45,315,4,4);
+		if (pac.getLife() == 2{
+			setcolor(BLACK);
+			setfillstyle(SOLID_FILL, BLACK);
+		}
+		sector(335,420,45,315,4,4);
+	}
+	if (!pac.getLife()){
+		//GAME OVER message
+		//clears screen
+		cleardevice();
+		//prints message
+		setcolor(YELLOW);
+		settextstyle(TRIPLEX_FONT,0,5);
+		outtextxy(210,200,"GAME OVER");
+		//increments score to account for ghosts eaten
+		pac.setScore(pac.getScore() + scoreOffset);
+		getch();
+	}	
+	if (pac.getScore == 3000){
+		//You win message
+		cleardevice();
+		setcolor(YELLOW);
+		settextstyle(TRIPLEX_FONT,0,5);
+		outtextxy(210,200,"YOU WIN");
+		//increments score to account for ghosts eaten
+		pac.setScore(pac.getScore() + scoreOffset);
+		getch();
+	}
 }
 
 #endif
