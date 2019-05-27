@@ -730,6 +730,12 @@ void Ghost::ghostDraw(){
 		setcolor(BROWN);
 		setfillstyle(SOLID_FILL, BROWN);
 	}
+	//Power pellet is active, all ghosts should be white
+	
+	if (powerPellet == 1){
+		setcolor(WHITE);
+		setfillstyle(SOLID_FILL, WHITE);
+	}
 	//ghost is ellipse plus a rectangle to create the ghost look
 	poly[0] = xco - 4;
 	poly[1] = yco;
@@ -944,6 +950,12 @@ void pacman() {
 		//get user input for direction
 		direction = getch();
 		pac.pacMove(direction);
+		//If pac eats power pellet reflect that in ghosts
+		if (pac.getPowerPellet == 1) {
+			for (int k = 0; k < 4; k++) {
+				ghost[k].setPowerPellet(1);
+			}
+		}
 		for (int j = 0; j < 4; j++) {
 			//if ghost and pac overlap
 			if (ghost[j].getXco() == pac.getXco() && ghost[j].getYco() == pac.getYco()) {
@@ -959,7 +971,24 @@ void pacman() {
 					ghost.ghostMove();
 				}
 				else {
+					//reset pac man and ghosts to start positions and decrease life
 					pac.setLife(pac.getLife() - 1);
+					pac.pacErase();
+					pac.setXco(PACSTARTXCO);
+					pac.setYco(PACSTARTYCO);
+					for (int k = 0; k < 4; k++){						
+						//draw ghost at start position
+						ghost[k].setXco(STARTGHOSTXCO + k * 10);
+						ghost[k].setYco(STARTGHOSTYCO);
+						if (k < 2) {
+							ghost[k].setNewDirection('a');
+						}
+						else {
+							ghost[k].setNewDirection('d');
+						}
+						ghost[k].ghostMove();
+					}
+					
 				}
 			}
 		}
