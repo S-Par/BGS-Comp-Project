@@ -696,7 +696,7 @@ void Ghost::ghostErase() {
 	setcolor(BLACK);
 	setfillstyle(SOLID_FILL, BLACK);
 	//creating array to store rectangle coordinates
-	int poly[8];
+	int poly[8],i,j;
 	//ghost is ellipse plus a rectangle to create the ghost look, so to erase the coordinates are shaded black
 	poly[0] = xco - 4;
 	poly[1] = yco;
@@ -710,6 +710,18 @@ void Ghost::ghostErase() {
 	fillpoly(4, poly);
 	//draws the ellipse
 	fillellipse(xco, yco, 4, 4);
+	//redrawing map element after ghost got erased
+	j = convertXco(xco);
+	i = convertYco(yco);
+	int counter = mapCo[i][j];
+	setcolor(YELLOW);
+	setfillstyle(SOLID_FILL, MAGENTA);
+	if (counter == 1) {
+		fillellipse(xco, yco, 1, 1);
+	}
+	else {
+		fillellipse(xco, yco, 1, 1);
+	}
 }
 
 void Ghost::ghostDraw(){
@@ -945,18 +957,15 @@ void pacman() {
 			setfillstyle(SOLID_FILL, BLACK);
 		}
 		sector(335,420,45,315,4,4);
+		//get user input for direction
+		direction = getch();
+		pac.pacMove(direction)
+		//Ghost move
 		for (int i = 0; i < 4; i++) {
 			//move the ghost
 			ghost[i].ghostMove();
-		}
-		//get user input for direction
-		direction = getch();
-		pac.pacMove(direction);
-		//If pac eats power pellet reflect that in ghosts
-		if (pac.getPowerPellet() == 1) {
-			for (int k = 0; k < 4; k++) {
-				ghost[k].setPowerPellet(1);
-			}
+			//set ghost powerpellet to that of pac man
+			ghost[i].setPowerPellet(pac.getPowerPellet());
 		}
 		for (int j = 0; j < 4; j++) {
 			//if ghost and pac overlap
