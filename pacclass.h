@@ -405,11 +405,14 @@ class Character {
 class Pacman: public Character{
 	int score;
 	int life;
+	//counts when powerPellet is active
+	int powerPelCounter;
 	public:
 	//Constructor of pacman class
 	Pacman():Character(PACSTARTXCO, PACSTARTYCO){
 		score = 0;
 		life = 3;
+		powerPelCounter = 0;
 	}
 	//Destructor
 	~Pacman(){
@@ -457,6 +460,13 @@ class Ghost: public Character{
 	}
 	void setColor(char newColor){
 		color = newColor;
+	}
+	char getNewDirection(){
+		return newDirection;
+	}
+	
+	void getNewDirection(char direction){
+		newDirection = direction;
 	}
 	//Erases a ghost at particular coordinates
 	void ghostErase();
@@ -519,6 +529,12 @@ void Pacman::pacMove(char direction){
 	int counter;
 	//creating array coordinates
 	int i,j;
+	//If powerPellet is active, increment powerPelCounter
+	if (powerPellet == 1)
+		powerPelCounter++;
+	//If power pellet is active for 5 secs (25 cycles of 200 ms) reset powerPellet
+	if (powerPelCounter == 25)
+		powerPellet = 0;
 	//Direction is w for up, a for left, s for down and d for right, each move is ten spaces
 	if (direction == 'w'){
 		//Checking array position of new position after move
@@ -548,6 +564,8 @@ void Pacman::pacMove(char direction){
 				mapCo[i][j] = 4;
 				//set powerPellet to 1
 				setPowerPellet(1);
+				//set powerPelCounter to 0
+				powerPelCounter = 0;
 			}
 		}
 	}
@@ -579,6 +597,8 @@ void Pacman::pacMove(char direction){
 				mapCo[i][j] = 4;
 				//set powerPellet to 1
 				setPowerPellet(1);
+				//set powerPelCounter to 0
+				powerPelCounter = 0;
 			}
 		}
 		//If it is teleport point, xco changes to 435, yco stays the same
@@ -619,6 +639,8 @@ void Pacman::pacMove(char direction){
 				mapCo[i][j] = 4;
 				//set powerPellet to 1
 				setPowerPellet(1);
+				//set powerPelCounter to 0
+				powerPelCounter = 0;
 			}
 		}
 	}
@@ -650,6 +672,8 @@ void Pacman::pacMove(char direction){
 				mapCo[i][j] = 4;
 				//set powerPellet to 1
 				setPowerPellet(1);
+				//set powerPelCounter to 0
+				powerPelCounter = 0;
 			}
 		}
 		//If it is teleport point, xco changes to 185, yco stays the same
@@ -877,6 +901,13 @@ void pacman() {
 		ghost[i].setXco(ghost[i].getXco() + i*10);
 		//draw each ghost
 		ghost[i].ghostDraw();
+		//sets direction for motion
+		if (i < 2) {
+			ghost[i].setNewDirection('a');
+		}
+		else {
+			ghost[i].setNewDirection('d');
+		}
 	}
 	//draw pacman
 	pac.pacDraw(direction);
@@ -906,6 +937,34 @@ void pacman() {
 			setfillstyle(SOLID_FILL, BLACK);
 		}
 		sector(335,420,45,315,4,4);
+		for (int i = 0; i < 4; i++) {
+			//move the ghost
+			ghost[i].ghostMove();
+		}
+		//get user input for direction
+		direction = getch();
+		pac.pacMove(direction);
+		for (int j = 0; j < 4; j++) {
+			//if ghost and pac overlap
+			if (ghost[j].getXco() == pac.getXco() && ghost[j].getYco() == pac.getYco()) {
+				//if powerPellet active
+				if (pac.powerPellet == 1) {
+					//erase the ghost
+					ghost[j].ghostErase();
+					//increment score offset by 500
+					scoreOffset += 500;
+					//draw ghost at start position
+					ghost[j].setXco(STARTGHOSTXCO + j*10);
+					ghost[j].setYco(STARTGHOSTYCO);
+					ghost.ghostMove();
+				}
+				else {
+					pac.setLife(pac.getLife() - 1);
+				}
+			}
+		}
+		delay(200);
+		delline();
 	}
 	if (!pac.getLife()){
 		//GAME OVER message
