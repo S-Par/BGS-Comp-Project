@@ -26,9 +26,9 @@
 //array that stores map positions, 0 for walls, 1 for pellets, 2 for power pellet, 3 for teleport places, 4 for empty space
 //For reference, map rows are numbered from A to 6, column are from a to 2
 int mapCo[32][28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		   0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,
-		   0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,
-		   0,2,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,2,0,
+		   		   0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,
+		   		   0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,
+		   		   0,2,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,2,0,
 		   0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,
 		   0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
 		   0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,
@@ -60,11 +60,11 @@ int mapCo[32][28]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 
 //Functions to convert xco and yco to array coordinates
 int convertXco(int xco){
-	return (xco-175) / 10;
+	return (xco - 175) / 10;
 }
 
 int convertYco(int yco){
-	return (yco-90) / 10;
+	return (yco - 90) / 10;
 }
 
 //Function for the introduction to pacman (non-graphics)
@@ -198,6 +198,8 @@ void instructions()
 //Function to draw the pacman map
 void map()
 {
+   //Clear the screen
+   cleardevice();
    setcolor(BLUE);
    line(170,85,450,85);   line(170,405,450,405);//Aa to A2 and 6a to 62
    line(180,395,440,395);//5b to 51
@@ -464,8 +466,8 @@ class Ghost: public Character{
 	char getNewDirection(){
 		return newDirection;
 	}
-	
-	void getNewDirection(char direction){
+
+	void setNewDirection(char direction){
 		newDirection = direction;
 	}
 	//Erases a ghost at particular coordinates
@@ -538,16 +540,16 @@ void Pacman::pacMove(char direction){
 	//Direction is w for up, a for left, s for down and d for right, each move is ten spaces
 	if (direction == 'w'){
 		//Checking array position of new position after move
-		i = convertXco(getXco());
-		j = convertYco(getYco()+10);
+		j = convertXco(getXco());
+		i = convertYco(getYco() - 10);
 		//Setting counter to map value of array
 		counter = mapCo[i][j];
 		//If array coordinate is not wall, then move
 		if (counter != 0){
 			//erasing previous position
 			pacErase();
-			//increment yco to move up
-			setYco(getYco() + 10);
+			//decrement yco to move up
+			setYco(getYco() - 10);
 			//drawing pacman at new position
 			pacDraw(direction);
 			//Checking if pellet or powerPellet at the new position
@@ -571,8 +573,8 @@ void Pacman::pacMove(char direction){
 	}
 	else if (direction == 'a'){
 		//Checking array position of new position after move
-		i = convertXco(getXco() - 10);
-		j = convertYco(getYco());
+		j = convertXco(getXco() - 10);
+		i = convertYco(getYco());
 		//Setting counter to map value of array
 		counter = mapCo[i][j];
 		//If array coordinate is not wall or teleport point, then move ten spaces
@@ -605,7 +607,7 @@ void Pacman::pacMove(char direction){
 		if (counter == 3){
 			//erasing previous position
 			pacErase();
-			//change Xco 
+			//change Xco
 			setXco(435);
 			//draw pacman at new position
 			pacDraw(direction);
@@ -613,16 +615,16 @@ void Pacman::pacMove(char direction){
 	}
 	else if (direction == 's'){
 		//Checking array position of new position after move
-		i = convertXco(getXco());
-		j = convertYco(getYco() - 10);
+		j = convertXco(getXco());
+		i = convertYco(getYco() + 10);
 		//Setting counter to map value of array
 		counter = mapCo[i][j];
 		//If array coordinate is not wall, then move
 		if (counter != 0){
 			//erasing previous position
 			pacErase();
-			//decrement yco to move down
-			setYco(getYco() - 10);
+			//increment yco to move down
+			setYco(getYco() + 10);
 			//drawing pacman at new position
 			pacDraw(direction);
 			//Checking if pellet or powerPellet at the new position
@@ -646,8 +648,8 @@ void Pacman::pacMove(char direction){
 	}
 	else if (direction == 'd'){
 		//Checking array position of new position after move
-		i = convertXco(getXco() + 10);
-		j = convertYco(getYco());
+		j = convertXco(getXco() + 10);
+		i = convertYco(getYco());
 		//Setting counter to map value of array
 		counter = mapCo[i][j];
 		//If array coordinate is not wall or teleport point, then move 10 spaces
@@ -731,7 +733,7 @@ void Ghost::ghostDraw(){
 		setfillstyle(SOLID_FILL, BROWN);
 	}
 	//Power pellet is active, all ghosts should be white
-	
+
 	if (powerPellet == 1){
 		setcolor(WHITE);
 		setfillstyle(SOLID_FILL, WHITE);
@@ -759,16 +761,16 @@ void Ghost::ghostMove(){
 	//Direction is w for up, a for left, s for down and d for right, each move is ten spaces
 	if (newDirection == 'w'){
 		//Checking array position of new position after move
-		i = convertXco(xco);
-		j = convertYco(yco + 10);
+		j = convertXco(xco);
+		i = convertYco(yco - 10);
 		//Setting counter to map value of array
 		counter = mapCo[i][j];
 		//If array coordinate is not wall, then move
 		if (counter != 0){
 			//erasing previous position
 			ghostErase();
-			//increment yco to move up
-			setYco(getYco() + 10);
+			//decrement yco to move up
+			setYco(getYco() - 10);
 			//drawing ghost at new position
 			ghostDraw();
 		}
@@ -787,8 +789,8 @@ void Ghost::ghostMove(){
 	}
 	else if (newDirection == 'a'){
 		//Checking array position of new position after move
-		i = convertXco(getXco() - 10);
-		j = convertYco(getYco());
+		j = convertXco(getXco() - 10);
+		i = convertYco(getYco());
 		//Setting counter to map value of array
 		counter = mapCo[i][j];
 		//If array coordinate is not wall or teleport point, then move ten spaces
@@ -804,7 +806,7 @@ void Ghost::ghostMove(){
 		else if (counter == 3){
 			//erasing previous position
 			ghostErase();
-			//change Xco 
+			//change Xco
 			setXco(435);
 			//draw ghost at new position
 			ghostDraw();
@@ -824,16 +826,16 @@ void Ghost::ghostMove(){
 	}
 	else if (newDirection == 's'){
 		//Checking array position of new position after move
-		i = convertXco(getXco());
-		j = convertYco(getYco() - 10);
+		j = convertXco(getXco());
+		i = convertYco(getYco() + 10);
 		//Setting counter to map value of array
 		counter = mapCo[i][j];
 		//If array coordinate is not wall, then move
 		if (counter != 0){
 			//erasing previous position
 			ghostErase();
-			//decrement yco to move down
-			setYco(getYco() - 10);
+			//increment yco to move down
+			setYco(getYco() + 10);
 			//drawing ghost at new position
 			ghostDraw();
 		}
@@ -852,8 +854,8 @@ void Ghost::ghostMove(){
 	}
 	else if (newDirection == 'd'){
 		//Checking array position of new position after move
-		i = convertXco(getXco() + 10);
-		j = convertYco(getYco());
+		j = convertXco(getXco() + 10);
+		i = convertYco(getYco());
 		//Setting counter to map value of array
 		counter = mapCo[i][j];
 		//If array coordinate is not wall or teleport point, then move 10 spaces
@@ -869,7 +871,7 @@ void Ghost::ghostMove(){
 		else if (counter == 3){
 			//erasing previous position
 			ghostErase();
-			//change Xco 
+			//change Xco
 			setXco(435);
 			//draw ghost at new position
 			ghostDraw();
@@ -887,7 +889,7 @@ void Ghost::ghostMove(){
 			}
 		}
 	}
-	
+
 }
 
 //function for the pacman game :)
@@ -927,7 +929,7 @@ void pacman() {
 		}
 		gotoxy(15,4);
 		printf("SCORE:");
-		printf("%d",pacMan.score);
+		printf("%d",pac.getScore());
 		setcolor(YELLOW);
 		outtextxy(255,415,"Lives:");
 		setcolor(YELLOW);
@@ -938,7 +940,7 @@ void pacman() {
 			setfillstyle(SOLID_FILL, BLACK);
 		}
 		sector(325,420,45,315,4,4);
-		if (pac.getLife() == 2{
+		if (pac.getLife() == 2){
 			setcolor(BLACK);
 			setfillstyle(SOLID_FILL, BLACK);
 		}
@@ -951,7 +953,7 @@ void pacman() {
 		direction = getch();
 		pac.pacMove(direction);
 		//If pac eats power pellet reflect that in ghosts
-		if (pac.getPowerPellet == 1) {
+		if (pac.getPowerPellet() == 1) {
 			for (int k = 0; k < 4; k++) {
 				ghost[k].setPowerPellet(1);
 			}
@@ -960,7 +962,7 @@ void pacman() {
 			//if ghost and pac overlap
 			if (ghost[j].getXco() == pac.getXco() && ghost[j].getYco() == pac.getYco()) {
 				//if powerPellet active
-				if (pac.powerPellet == 1) {
+				if (pac.getPowerPellet() == 1) {
 					//erase the ghost
 					ghost[j].ghostErase();
 					//increment score offset by 500
@@ -968,7 +970,7 @@ void pacman() {
 					//draw ghost at start position
 					ghost[j].setXco(STARTGHOSTXCO + j*10);
 					ghost[j].setYco(STARTGHOSTYCO);
-					ghost.ghostMove();
+					ghost[j].ghostMove();
 				}
 				else {
 					//reset pac man and ghosts to start positions and decrease life
@@ -976,7 +978,7 @@ void pacman() {
 					pac.pacErase();
 					pac.setXco(PACSTARTXCO);
 					pac.setYco(PACSTARTYCO);
-					for (int k = 0; k < 4; k++){						
+					for (int k = 0; k < 4; k++){
 						//draw ghost at start position
 						ghost[k].setXco(STARTGHOSTXCO + k * 10);
 						ghost[k].setYco(STARTGHOSTYCO);
@@ -1007,7 +1009,7 @@ void pacman() {
 		pac.setScore(pac.getScore() + scoreOffset);
 		getch();
 	}	
-	if (pac.getScore == 3000){
+	if (pac.getScore() == 3000){
 		//You win message
 		cleardevice();
 		setcolor(YELLOW);
