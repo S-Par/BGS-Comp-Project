@@ -719,8 +719,8 @@ void Ghost::ghostErase() {
 	if (counter == 1) {
 		fillellipse(xco, yco, 1, 1);
 	}
-	else {
-		fillellipse(xco, yco, 1, 1);
+	else if (counter == 2) {
+		fillellipse(xco, yco, 2, 2);
 	}
 }
 
@@ -959,7 +959,7 @@ void pacman() {
 		sector(335,420,45,315,4,4);
 		//get user input for direction
 		direction = getch();
-		pac.pacMove(direction)
+		pac.pacMove(direction);
 		//Ghost move
 		for (int i = 0; i < 4; i++) {
 			//move the ghost
@@ -999,7 +999,7 @@ void pacman() {
 						}
 						ghost[k].ghostMove();
 					}
-					
+
 				}
 			}
 		}
@@ -1008,20 +1008,27 @@ void pacman() {
 	}
 	if (!pac.getLife()){
 		//GAME OVER message
+		//increments score to account for ghosts eaten
+		pac.setScore(pac.getScore() + scoreOffset);
 		//clears screen
 		cleardevice();
 		//prints message
 		setcolor(YELLOW);
+		gotoxy(15,4);
+		printf("SCORE:");
+		printf("%d",pac.getScore());
 		settextstyle(TRIPLEX_FONT,0,5);
 		outtextxy(210,200,"GAME OVER");
-		//increments score to account for ghosts eaten
-		pac.setScore(pac.getScore() + scoreOffset);
 		getch();
 	}	
 	if (pac.getScore() == 3000){
 		//You win message
+		//increments score to account for ghosts eaten
+		pac.setScore(pac.getScore() + scoreOffset);
 		cleardevice();
 		setcolor(YELLOW);
+		gotoxy(15,4);
+		printf("SCORE: %d",pac.getScore());
 		settextstyle(TRIPLEX_FONT,0,5);
 		outtextxy(210,200,"YOU WIN");
 		//increments score to account for ghosts eaten
