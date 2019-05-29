@@ -988,6 +988,8 @@ Pacman mainGame() {
 					pac.setXco(PACSTARTXCO);
 					pac.setYco(PACSTARTYCO);
 					for (int k = 0; k < 4; k++){
+						//erase ghosts
+						ghost[k].ghostErase();
 						//draw ghost at start position
 						ghost[k].setXco(STARTGHOSTXCO + k * 10);
 						ghost[k].setYco(STARTGHOSTYCO);
