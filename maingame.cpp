@@ -61,8 +61,10 @@ void pacmanGame() {
 	closegraph();
 
 	//write into files
-	fstream file("pacmanScores.txt",ios::out|ios::binary);
+	fstream file("pacscore.txt",ios::out|ios::binary);
 	file.write((char *)&pac,sizeof(pac));
+	//close file
+	file.close();
 }
 
 void drawPac(int active) {
