@@ -8,10 +8,19 @@
 
 void drawPac(int);
 void drawPong(int);
-char *graphicsGameIntro();
+void graphicsGameIntro(char[]);
 void pacmanGame();
 
 int main() {
+	clrscr();
+	//introduction
+	char activeGame[7] = "pacman";
+	graphicsGameIntro(activeGame);
+	//as pong not yet complete
+	if (strcmp(activeGame,"pong")==0) {
+		return 0;
+	}
+
 	//play pacman
 	pacmanGame();
 	return 0;
@@ -20,7 +29,8 @@ int main() {
 //Function for implementing the game pacman
 void pacmanGame() {
 
-
+	//introduction
+	introduction();
 
 	// request auto detection
 	int gdriver = DETECT, gmode, errorcode;
@@ -40,12 +50,8 @@ void pacmanGame() {
 		exit(1);
 	}
 
-	char *activeGame = graphicsGameIntro();
-	if (strcmp(activeGame,"pong")==0)
-	{
-		exit(0);
-	}
-	//Display the introduction and map screens
+
+	//Display the instruction and map screens
 	instructions();
 	map();
 	//Start game and store pacman object within pac
@@ -108,12 +114,34 @@ void drawPong (int active) {
 	}
 }
 
-char *graphicsGameIntro() {
+void graphicsGameIntro(char activeGame[]) {
+
+	// request auto detection
+	int gdriver = DETECT, gmode, errorcode;
+
+	// initialize graphics and local variables
+	initgraph(&gdriver, &gmode, "C:\\TC\\BGI");
+
+	// read result of initialization
+	errorcode = graphresult();
+
+	//if an error occurred
+	if (errorcode != grOk)
+	{
+		printf("Graphics error: %s\n", grapherrormsg(errorcode));
+		printf("Press any key to halt:");
+		getch();
+		exit(1);
+	}
+
+	//display text
 	outtextxy(50, 50, "Toggle by pressing a(to go left) or d(to go right)");
 	outtextxy(50, 75, "press enter to select the active game");
+	//draw the circle for pacman and square for pong
 	drawPac(1);
 	drawPong(0);
-	char ch = 1, activeGame[7] = "pacman";
+	//Take user input till the user presses enter, toggle between pacman and pong
+	char ch = 1;
 	while (ch != 13) {
 		ch = getch();
 		if (ch == 'a'){
@@ -128,5 +156,5 @@ char *graphicsGameIntro() {
 		}
 	}
 	cleardevice();
-	return activeGame;
+	closegraph();
 }
