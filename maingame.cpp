@@ -4,10 +4,20 @@
 #include "pacclass.h"
 #include <fstream.h>
 
-int main()
-{
+void pacmanGame();
+
+int main() {
+	//play pacman
+	pacmanGame();
+	return 0;
+}
+
+//Function for implementing the game pacman
+void pacmanGame() {
+
 	//create introduction screen of pacman
 	introduction();
+
 	// request auto detection
 	int gdriver = DETECT, gmode, errorcode;
 
@@ -16,7 +26,8 @@ int main()
 
 	// read result of initialization
 	errorcode = graphresult();
-	// an error occurred
+
+	//if an error occurred
 	if (errorcode != grOk)
 	{
 		printf("Graphics error: %s\n", grapherrormsg(errorcode));
@@ -36,5 +47,4 @@ int main()
 	//write into files
 	fstream file("pacmanScores.txt",ios::out|ios::binary);
 	file.write((char *)&pac,sizeof(pac));
-	return 0;
 }
