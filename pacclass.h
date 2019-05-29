@@ -904,8 +904,8 @@ void Ghost::ghostMove(){
 
 }
 
-//function for the pacman game :)
-void pacman() {
+//function for the pacman game, returns the Pacman object
+Pacman mainGame() {
 	//create objects of pacman and array of 4 ghost objects
 	Pacman pac;
 	Ghost ghost[4];
@@ -939,9 +939,9 @@ void pacman() {
 			//exit the loop as all pellets are eaten
 			break;
 		}
+		//Display score and lives
 		gotoxy(15,4);
-		printf("SCORE:");
-		printf("%d",pac.getScore());
+		printf("SCORE: %d",pac.getScore() + scoreOffset);
 		setcolor(YELLOW);
 		outtextxy(255,415,"Lives:");
 		setcolor(YELLOW);
@@ -1015,8 +1015,7 @@ void pacman() {
 		//prints message
 		setcolor(YELLOW);
 		gotoxy(15,4);
-		printf("SCORE:");
-		printf("%d",pac.getScore());
+		printf("SCORE: %d",pac.getScore());
 		settextstyle(TRIPLEX_FONT,0,5);
 		outtextxy(210,200,"GAME OVER");
 		getch();
@@ -1035,6 +1034,8 @@ void pacman() {
 		pac.setScore(pac.getScore() + scoreOffset);
 		getch();
 	}
+	//returns object
+	return pac;
 }
 
 #endif
