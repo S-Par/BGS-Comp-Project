@@ -6,10 +6,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+//Function prototypes
 void drawPac(int);
 void drawPong(int);
 void graphicsGameIntro(char[]);
 void pacmanGame();
+void sortPac(Pacman pacm[]);
 
 int main() {
 	clrscr();
@@ -23,6 +25,14 @@ int main() {
 
 	//play pacman
 	pacmanGame();
+
+	fstream file("pacscore.txt", ios::in|ios::binary);
+	Pacman obj;
+	while (file.read((char*)&obj, sizeof(obj))){
+		cout<<"\nScore:"<<obj.getScore();
+	}
+	file.close();
+	getch();
 	return 0;
 }
 
@@ -60,11 +70,48 @@ void pacmanGame() {
 	// clean up
 	closegraph();
 
-	//write into files
-	fstream file("pacscore.txt",ios::out|ios::binary);
-	file.write((char *)&pac,sizeof(pac));
+	//Creating objects for file reading
+	Pacman pacm[10],obj;
+	int i = 0;
+	fstream input("pacscore.txt", ios::in|ios::binary);
+	while (input.read((char*)&obj, sizeof(obj))){
+		pacm[i] = obj;
+		i++;
+	}
+	input.close();
+
+	//pac score is greater than 10th spot of leaderboard, add pac to leaderboard
+	if (pac.getScore() > pacm[9].getScore())
+	{
+		pacm[9] = pac;
+	}
+
+	//sort the leaderboard
+	sortPac(pacm);
+
+	//write into file
+	fstream file("pacscore.txt", ios::out|ios::binary);
+	for (i = 0; i < 10; i++) {
+		obj = pacm[i];
+		file.write((char *)&obj, sizeof(obj));
+	}
 	//close file
 	file.close();
+
+}
+
+//sorts an array of pac objects in descending order of scores
+void sortPac(Pacman pacm[]) {
+	Pacman pac;
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 9; j++) {
+			if (pacm[j].getScore() < pacm[j + 1].getScore()) {
+				pac = pacm[j];
+				pacm[j] = pacm[j + 1];
+				pacm[j + 1] = pac;
+			}
+		}
+	}
 }
 
 void drawPac(int active) {
