@@ -52,12 +52,12 @@ class User {
 		pongHighScore = score;
 	}
 	//Register function
-	void regUser() {
+	int regUser() {
 		char usrname[40], pwd[40], pwdCh = '2';
 		//User is already registered, show message and exit
-		if (strcmp(isRegistered, "True") {
+		if (strcmp(isRegistered, "True") == 0) {
 			cout<<"\nYou are already registered";
-			return
+			return 0;
 		}
 		//Ask for user details
 		cout<<"\nEnter username:";
@@ -74,7 +74,7 @@ class User {
 		}
 		pwd[i] = '\0';
 		//Set username and password
-		setUsername(usrname);
+		strcpy(username, usrname);
 		setPassword(pwd);
 
 		cout<<"\nEnter Age:";

@@ -1,6 +1,7 @@
 #include <iostream.h>
 #include <graphics.h>
 #include <conio.h>
+#include "usrClass.h"
 #include "pacclass.h"
 #include <fstream.h>
 #include <stdlib.h>
@@ -15,6 +16,8 @@ void sortPac(Pacman pacm[]);
 
 int main() {
 	clrscr();
+	User player;
+	player.regUser();
 	//introduction
 	char activeGame[7] = "pacman";
 	graphicsGameIntro(activeGame);
