@@ -10,7 +10,7 @@ class User {
 	char password[40];
 	int age;
 	int pacmanHighScore;
-	int galagaHighScore;
+	int pongHighScore;
 	char isRegistered[7];
 	//for security reasons, this is a private function
 	void setPassword(char pwd[]) {
@@ -20,7 +20,7 @@ class User {
 	//default constructor
 	User() {
 		pacmanHighScore = 0;
-		galagaHighScore = 0;
+		pongHighScore = 0;
 		strcpy(isRegistered, "False");
 	}
 	//getter and setter methods
@@ -39,8 +39,8 @@ class User {
 	int getPacmanHighScore() {
 		return pacmanHighScore;
 	}
-	int getGalagaHighScore() {
-		return galagaHighScore;
+	int getPongHighScore() {
+		return pongHighScore;
 	}
 	void setAge(int newAge) {
 		age = newAge;
@@ -48,8 +48,8 @@ class User {
 	void setPacmanHighScore(int pacScore) {
 		pacmanHighScore = pacScore;
 	}
-	void setGalagaHighScore(int score) {
-		galagaHighScore = score;
+	void setPongHighScore(int score) {
+		pongHighScore = score;
 	}
 	//Register function
 	void regUser() {
