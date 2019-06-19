@@ -1,4 +1,4 @@
-//The database part of the project
+//The user class header file
 #include <iostream.h>
 #include <string.h>
 #include <conio.h>
