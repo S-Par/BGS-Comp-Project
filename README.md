@@ -3,5 +3,5 @@
  ### Project Details
  Games provided:
  - Pac-man
- - Pong/Galaga
+ - Pong
  
