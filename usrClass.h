@@ -1,7 +1,9 @@
-//The user class header file
+// Created by Siddharth Parmar
+// The user class header file
 #include <iostream.h>
 #include <string.h>
 #include <conio.h>
+#include <graphics.h>
 #include <fstream.h>
 
 //user class
@@ -62,6 +64,17 @@ class User {
 		//Ask for user details
 		cout<<"\nEnter username:";
 		cin>>usrname;
+
+		//Check file if user with same username  is registered
+		//char available[] = checkUser(usrname);
+		/*if (strcmp(available, "False") == 0) {
+			cout<<"Sorry! Username is taken";
+			cout<<"\nType any character to try again";
+			getch();
+			clrscr();
+		}
+		*/
+		// Password entry
 		int i = 0;
 		cout<<"Enter password(39 characters or below):";
 		while(i < 39) {
@@ -112,3 +125,4 @@ class User {
 		setPassword(newPwd);
 	}
 };
+
