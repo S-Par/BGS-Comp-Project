@@ -6,6 +6,9 @@
 #include <graphics.h>
 #include <fstream.h>
 
+// Function Prototypes
+char *checkUser(char []);
+
 //user class
 class User {
 	char username[40];
@@ -66,14 +69,15 @@ class User {
 		cin>>usrname;
 
 		//Check file if user with same username  is registered
-		//char available[] = checkUser(usrname);
-		/*if (strcmp(available, "False") == 0) {
+		char available[] = checkUser(usrname);
+		if (strcmp(available, "False") == 0) {
 			cout<<"Sorry! Username is taken";
 			cout<<"\nType any character to try again";
 			getch();
 			clrscr();
+			regUser();
 		}
-		*/
+		
 		// Password entry
 		int i = 0;
 		cout<<"Enter password(39 characters or below):";
@@ -126,3 +130,14 @@ class User {
 	}
 };
 
+// Function to check if username available, returns "False" if not available
+char *checkUser(char usrname[]) {
+	fstream user("userobj.txt", ios::in|ios::binary);
+	User player;
+	while (!user.read((char*)&player, sizeof(player))) {
+		// Checks if username is taken
+		if (strcmp(user.getUsername, usrname) == 0)
+			return "False";
+	}
+	return "True"
+}
