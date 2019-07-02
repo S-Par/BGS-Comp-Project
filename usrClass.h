@@ -14,6 +14,7 @@ class User {
 	char username[40];
 	char password[40];
 	int age;
+	char email[100];
 	int pacmanHighScore;
 	int pongHighScore;
 	char isRegistered[7];
@@ -31,6 +32,9 @@ class User {
 	//getter and setter methods
 	char *getUsername() {
 		return username;
+	}
+	char *getEmail() {
+		return email;
 	}
 	char *verifyPassword(char pwd[]) {
 		if (strcmp(password, pwd) == 0)
@@ -55,6 +59,9 @@ class User {
 	}
 	void setPongHighScore(int score) {
 		pongHighScore = score;
+	}
+	void setEmail(char usrEmail[]) {
+		strcpy(email, usrEmail);
 	}
 	//Register function
 	int regUser() {
@@ -93,40 +100,35 @@ class User {
 		//Set username and password
 		strcpy(username, usrname);
 		setPassword(pwd);
-
-		cout<<"\nEnter Age:";
+		// Age is set
+		cout<<"Enter Age:";
 		cin>>age;
+		// User email id accepted
+		cout<<"Enter email id:";
+		cin>>email;
 		//set isRegistered to True
 		strcpy(isRegistered, "True");
 	}
 	//Change Password function:
-	void changePassword() {
-		char pwd[40], pwdCh;
-		cout<<"\nEnter your existing password:";
-		while(i < 39) {
-			pwdCh = getch();
-			if (pwdCh == 13)
-				break;
-			cout<<"*";
-			pwd[i] = pwdCh;
-			i++;
-		}
-		pwd[i] = '\0';
+	void changePassword(char existingPwd[]) {
+		char newPwd[40], pwdCh;
 		char isPwdCorrect = verifyPassword(pwd);
-		if (strcmp(isPwdCorrect, "False"))
-			return ;
-		char newPwd[40];
-		cout<<"\nEnter new password:";
-		while(i < 39) {
-			pwdCh = getch();
-			if (pwdCh == 13)
-				break;
-			cout<<"*";
-			newPwd[i] = pwdCh;
-			i++;
+		if (strcmp(isPwdCorrect, "True")) {
+			cout<<"\nEnter new password:";
+			while(i < 39) {
+				pwdCh = getch();
+				if (pwdCh == 13)
+					break;
+				cout<<"*";
+				newPwd[i] = pwdCh;
+				i++;
+			}
+			newPwd[i] = '\0';
+			setPassword(newPwd);
 		}
-		newPwd[i] = '\0';
-		setPassword(newPwd);
+		else {
+			cout<<"\nWrong pa1ssword!";
+		}
 	}
 };
 
