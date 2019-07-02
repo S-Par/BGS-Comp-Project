@@ -81,7 +81,8 @@ class User {
 		cin>>usrname;
 
 		//Check file if user with same username  is registered
-		char available[] = checkUser(usrname);
+		char available[7];
+		strcpy(available, checkUser(usrname));
 		if (strcmp(available, "False") == 0) {
 			cout<<"Sorry! Username is taken";
 			cout<<"\nType any character to try again";
@@ -108,12 +109,13 @@ class User {
 	}
 
 	//Changes the password if correct existing password is entered
-	void changePassword(char existingPwd[]) {
+	void changePassword() {
 		char existingPwd[40], newPwd[40], pwdCh;
 		cout<<"\nEnter your existing password";
 		strcpy(existingPwd, acceptPassword());
-		char isPwdCorrect = verifyPassword(existingPwd);
-		if (strcmp(isPwdCorrect, "True")) {
+		char isPwdCorrect[7];
+		strcpy(isPwdCorrect, verifyPassword(existingPwd));
+		if (strcmp(isPwdCorrect, "True") == 0) {
 			cout<<"\nEnter new password:";
 			strcpy(newPwd, acceptPassword());
 			setPassword(newPwd);
@@ -140,15 +142,16 @@ char *checkUser(char usrname[]) {
 	User player;
 	while (!user.read((char*)&player, sizeof(player))) {
 		// Checks if username is taken
-		if (strcmp(user.getUsername, usrname) == 0)
+		if (strcmp(player.getUsername(), usrname) == 0)
 			return "False";
 	}
-	return "True"
+	return "True";
 }
 
 // Function to accept a password, returns the pwd string
 char *acceptPassword() {
 	char pwd[40], pwdCh;
+	int i = 0;
 	while(i < 39) {
 		pwdCh = getch();
 		if (pwdCh == 13)
@@ -159,7 +162,7 @@ char *acceptPassword() {
 	}
 	pwd[i] = '\0';
 
-	return pwd
+	return pwd;
 }
 
 //forgotPassword function to reset password using an email to the user
@@ -184,8 +187,9 @@ int forgotPassword() {
 		return 1;
 	}
 
-	char email[] = player.getEmail();
-
+	char email[100];
+	strcpy(email, player.getEmail());
+	int code;
 	CAuthSMTPConnection SMTP(587,"smtp.gmail.com","bgsarcade@gmail.com","HelloThere!");
 	if (SMTP.Connect())	{
 		// Create the text email message
@@ -195,7 +199,7 @@ int forgotPassword() {
 		msg.SetSenderName("BGS Comp Arcade");
 		msg.AddRecipient(email);
 		msg.AddText("You seem to have forgetten your password. Type the code: ");
-		int code = random(1000);
+		code = random(1000);
 		msg.AddText((char *)code);
 		// Send the email message
 		if (SMTP.SendMessage(msg))
