@@ -8,6 +8,7 @@
 
 // Function Prototypes
 char *checkUser(char []);
+char *acceptPassword();
 
 //user class
 class User {
@@ -88,15 +89,7 @@ class User {
 		// Password entry
 		int i = 0;
 		cout<<"Enter password(39 characters or below):";
-		while(i < 39) {
-			pwdCh = getch();
-			if (pwdCh == 13)
-				break;
-			cout<<"*";
-			pwd[i] = pwdCh;
-			i++;
-		}
-		pwd[i] = '\0';
+		strcpy(pwd, acceptPassword());
 		//Set username and password
 		strcpy(username, usrname);
 		setPassword(pwd);
@@ -109,25 +102,23 @@ class User {
 		//set isRegistered to True
 		strcpy(isRegistered, "True");
 	}
-	//Change Password function:
+	//Change Password methods, used for external function
+	/*void forgotPassword() {
+		
+	}*/
+
 	void changePassword(char existingPwd[]) {
-		char newPwd[40], pwdCh;
-		char isPwdCorrect = verifyPassword(pwd);
+		char existingPwd[40], newPwd[40], pwdCh;
+		cout<<"\nEnter your existing password";
+		strcpy(existingPwd, acceptPassword());
+		char isPwdCorrect = verifyPassword(existingPwd);
 		if (strcmp(isPwdCorrect, "True")) {
 			cout<<"\nEnter new password:";
-			while(i < 39) {
-				pwdCh = getch();
-				if (pwdCh == 13)
-					break;
-				cout<<"*";
-				newPwd[i] = pwdCh;
-				i++;
-			}
-			newPwd[i] = '\0';
+			strcpy(newPwd, acceptPassword());
 			setPassword(newPwd);
 		}
 		else {
-			cout<<"\nWrong pa1ssword!";
+			cout<<"\nWrong password!";
 		}
 	}
 };
@@ -142,4 +133,20 @@ char *checkUser(char usrname[]) {
 			return "False";
 	}
 	return "True"
+}
+
+// Function to accept a password, returns the pwd string
+char *acceptPassword() {
+	char pwd[40], pwdCh;
+	while(i < 39) {
+		pwdCh = getch();
+		if (pwdCh == 13)
+			break;
+		cout<<"*";
+		pwd[i] = pwdCh;
+		i++;
+	}
+	pwd[i] = '\0';
+
+	return pwd
 }
