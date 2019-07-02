@@ -18,7 +18,7 @@ int main() {
 	clrscr();
 	User player;
 	player.regUser();
-	fstream user("userobj.txt", ios::app|ios::binary);
+	fstream user("userobj.txt", ios::out|ios::binary);
 	user.write((char *)&player, sizeof(player));
 	user.close();
 	//introduction
