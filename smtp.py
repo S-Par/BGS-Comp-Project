@@ -1,7 +1,7 @@
 import smtplib
 import os
 
-file = open("~/Desktop/BGS_Comp/BGS-Comp-Project/forgotPwdEmail.txt", 'r')
+file = open("forgotPwdEmail.txt", 'r')
 
 server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 #Logs in to email id
