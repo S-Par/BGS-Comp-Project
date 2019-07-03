@@ -1,14 +1,12 @@
 import smtplib
 import os
-filename = 'forgotPwdEmail.txt' 
-if '_MEIPASS2' in os.environ:
-    filename = os.path.join(os.environ['_MEIPASS2'], filename)
-file = open(filename, 'r')
+
+file = open("~/Desktop/BGS_Comp/BGS-Comp-Project/forgotPwdEmail.txt", 'r')
 
 server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 #Logs in to email id
 server.login("bgsarcade@gmail.com", "GeneralKenobi!")
-message = """\ 
+message = """\
 Subject: Password Reset
 
 Enter the code 4872
