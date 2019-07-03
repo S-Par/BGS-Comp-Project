@@ -1,13 +1,11 @@
 // Created by Siddharth Parmar
 // The user class header file
-// Email functionality using smtp, smtp functionality from Microsoft ATL server (atlsmtpconnection.h)
 #include <iostream.h>
 #include <string.h>
 #include <conio.h>
 #include <stdlib.h>
 #include <graphics.h>
 #include <fstream.h>
-#include "atlsmtpconnection.h"
 
 // Function Prototypes
 char *checkUser(char []);
@@ -165,7 +163,7 @@ char *acceptPassword() {
 	return pwd;
 }
 
-//forgotPassword function to reset password using an email to the user
+//forgotPassword function to reset password using email as verification
 // returns 0 if all correct, else returns 1
 int forgotPassword() {
 	cout<<"\nYou have forgetten your password.";
@@ -186,41 +184,18 @@ int forgotPassword() {
 		cout<<"Username not found";
 		return 1;
 	}
-
+	
 	char email[100];
-	strcpy(email, player.getEmail());
-	int code;
-	CAuthSMTPConnection SMTP(587,"smtp.gmail.com","bgsarcade@gmail.com","HelloThere!");
-	if (SMTP.Connect())	{
-		// Create the text email message
-		CMimeMessage msg;
-		msg.SetSubject(csTFTDHdr);
-		msg.SetSender("bgsarcade@gmail.com");
-		msg.SetSenderName("BGS Comp Arcade");
-		msg.AddRecipient(email);
-		msg.AddText("You seem to have forgetten your password. Type the code: ");
-		code = random(1000);
-		msg.AddText((char *)code);
-		// Send the email message
-		if (SMTP.SendMessage(msg))
-			cout<<"\nSent Mail";
-		else {
-			cout<<"Mail not sent";
-			return 1;
-		}
-	}
-	else
-	{
-		cout<<"Can't connect to mail server";
-		return 1;
-	}
-	int usrEnterredCode; 
-	cout<<"\nEnter the code: ";
-	cin>>usrEnterredCode;
-	if (usrEnterredCode == code) {
+	cout<<"Enter your email: ";
+	cin>>email;
+	
+	if (strcmp(email, player.getEmail()) == 0) {
 		player.setPassword(4872);
 		return 0;
 	}
-	cout<<"Incorrect code entered.";
-	return 1;
+	else {
+		cout<<"Wrong email id";
+		return 1;
+	}
+	
 }
