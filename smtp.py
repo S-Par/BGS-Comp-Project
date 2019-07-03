@@ -2,7 +2,7 @@ import smtplib
 import os
 filename = 'forgotPwdEmail.txt' 
 if '_MEIPASS2' in os.environ:
-    filename = os.path.join(os.environ['_MEIPASS2'], filename))
+    filename = os.path.join(os.environ['_MEIPASS2'], filename)
 file = open(filename, 'r')
 
 server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
