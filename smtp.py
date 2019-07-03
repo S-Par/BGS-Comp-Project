@@ -1,5 +1,5 @@
 import smtplib
-import sys
+
 
 server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 #Logs in to email id
@@ -10,7 +10,12 @@ Subject: Password Reset
 Enter the code 4872
 """
 
-recipient_email_id = sys.argv[1]
+file = open("forgotPwdEmail.txt", "r")
+
+for line in file:
+    recipient_email_id = str(line)
+    recipient_email_id.rstrip('\n')
+    break
 
 server.sendmail("bgsarcade@gmail.com", recipient_email_id, message)
 server.quit()
