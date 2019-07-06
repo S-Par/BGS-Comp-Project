@@ -165,7 +165,7 @@ char *acceptPassword() {
 
 //forgotPassword function to reset password using email as verification
 // returns 0 if all correct, else returns 1
-int forgotPassword() {
+/* int forgotPassword() {
 	cout<<"\nYou have forgetten your password.";
 	char usrname[40];
 	cout<<"\nEnter your username: ";
@@ -198,4 +198,4 @@ int forgotPassword() {
 		return 1;
 	}
 	
-}
+}*/
