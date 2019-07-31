@@ -10,7 +10,6 @@
 // Function Prototypes
 char *checkUser(char []);
 char *acceptPassword();
-int forgotPassword();
 
 //user class
 class User {
@@ -88,28 +87,31 @@ class User {
 			clrscr();
 			regUser();
 		}
-		
-		// Password entry
-		int i = 0;
-		cout<<"Enter password(39 characters or below):";
-		strcpy(pwd, acceptPassword());
-		//Set username and password
-		strcpy(username, usrname);
-		setPassword(pwd);
-		// Age is set
-		cout<<"Enter Age:";
-		cin>>age;
-		// User email id accepted
-		cout<<"Enter email id:";
-		cin>>email;
-		//set isRegistered to True
-		strcpy(isRegistered, "True");
+		else{
+			// Password entry
+			int i = 0;
+			cout<<"Enter password(39 characters or below):";
+			strcpy(pwd, acceptPassword());
+			//Set username and password
+			strcpy(username, usrname);
+			setPassword(pwd);
+			// Age is set
+			cout<<"\nEnter Age:";
+			cin>>age;
+			// User email id accepted
+			cout<<"Enter email id:";
+			cin>>email;
+			//set isRegistered to True
+			strcpy(isRegistered, "True");
+		}
 	}
 
 	//Changes the password if correct existing password is entered
 	void changePassword() {
 		char existingPwd[40], newPwd[40], pwdCh;
-		cout<<"\nEnter your existing password";
+		clrscr();
+		cout<<"\nYou have chosen to change your password";
+		cout<<"\nEnter your existing password: ";
 		strcpy(existingPwd, acceptPassword());
 		char isPwdCorrect[7];
 		strcpy(isPwdCorrect, verifyPassword(existingPwd));
@@ -138,7 +140,7 @@ class User {
 char *checkUser(char usrname[]) {
 	fstream user("userobj.txt", ios::in|ios::binary);
 	User player;
-	while (!user.read((char*)&player, sizeof(player))) {
+	while (user.read((char*)&player, sizeof(player))) {
 		// Checks if username is taken
 		if (strcmp(player.getUsername(), usrname) == 0)
 			return "False";
@@ -163,32 +165,22 @@ char *acceptPassword() {
 	return pwd;
 }
 
-//forgotPassword function to reset password using email as verification
 // returns 0 if all correct, else returns 1
-/* int forgotPassword() {
+int forgotPassword(User player) {
 	cout<<"\nYou have forgetten your password.";
 	char usrname[40];
 	cout<<"\nEnter your username: ";
 	cin>>usrname;
-	int flag = 0;
 
-	fstream fin("userobj.txt", ios::in|ios::binary);
-	User player;
-	while (!fin.read((char *)&player, sizeof(player))) {
-		if (strcmp(usrname, player.getUsername()) == 0) {
-			flag++;
-			break;
-		}
-	}
-	if (flag == 0) {
-		cout<<"Username not found";
+	if (strcmp(player.getUsername(),usrname) != 0) {
+		cout<<"\nUsername not found";
 		return 1;
 	}
-	
+
 	char email[100];
-	cout<<"Enter your email: ";
+	cout<<"Enter your email id: ";
 	cin>>email;
-	
+
 	if (strcmp(email, player.getEmail()) == 0) {
 		player.setPassword(4872);
 		return 0;
@@ -197,5 +189,5 @@ char *acceptPassword() {
 		cout<<"Wrong email id";
 		return 1;
 	}
-	
-}*/
+
+}
