@@ -1,5 +1,7 @@
  ## BGS-Comp-Project
  This is a project that provides a gaming portal
+ There will be game servers with admins
+ User friends will be there
  ### Project Details
  Games provided:
  - Pac-man
