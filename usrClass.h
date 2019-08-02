@@ -11,6 +11,12 @@
 char *checkUser(char []);
 char *acceptPassword();
 
+//linked list for chat identifiers
+struct ChatIdentifier{
+	char identifier[8];
+	ChatIdentifier *node;
+};
+
 //user class
 class User {
 	char username[40];
@@ -20,6 +26,7 @@ class User {
 	int pacmanHighScore;
 	int pongHighScore;
 	char isRegistered[7];
+	ChatIdentifier *top;
 	//for security reasons, this is a private function
 	void setPassword(char pwd[]) {
 		strcpy(password, pwd);
@@ -30,6 +37,7 @@ class User {
 		pacmanHighScore = 0;
 		pongHighScore = 0;
 		strcpy(isRegistered, "False");
+		top = NULL;
 	}
 	//getter and setter methods
 	char *getUsername() {
@@ -64,6 +72,31 @@ class User {
 	}
 	void setEmail(char usrEmail[]) {
 		strcpy(email, usrEmail);
+	}
+	//pop and push into groups
+	void push(int a){
+		ChatIdentifier *ptr = new ChatIdentifier;
+		strcpy(ptr->identifier,itoa(a));
+		if (top == NULL){
+			top = ptr;
+			top->node = NULL;
+		}
+		else{
+			ptr->node = top;
+			top = ptr;
+		}
+	}
+	void pop(int a){
+		ChatIdentifier *ptr = top,*ptr1 = top;
+		char iden[] = itoa(a);
+		while(strcmp(ptr->identifier,iden)!=0){
+			ptr = ptr->node;
+		}
+		while(ptr1->node != ptr){
+			ptr1 = ptr1->node;
+		}
+		ptr1->node = ptr->node;
+		delete ptr;
 	}
 	//Register function
 	int regUser() {
@@ -191,3 +224,6 @@ int forgotPassword(User player) {
 	}
 
 }
+
+//Function to find next chat identifier
+int
