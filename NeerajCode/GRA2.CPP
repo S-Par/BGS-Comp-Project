@@ -1,7 +1,6 @@
 #include<iostream.h>
 #include<conio.h>
 #include<graphics.h>
-#include<process.h>
 #include<stdlib.h>
 #include<dos.h>
 #include<ctype.h>
@@ -24,60 +23,49 @@ float bally=250;
 float tempbally=250;
 float linex,liney;
 
-int checkCol(int num)
-{
-
- if(num==1)  //right
-{
-
-if(y1<bally && bally<y1+100)
-  return 1;
-else
- return 0;
-
+//Function to check if ball hit a paddle, returns 1 if hit else returns 0
+int checkCol(int num){
+	//right paddle 
+	if(num == 1) {
+		if(y1 < bally && bally < y1 + 100)
+			return 1;
+		else
+			return 0;
+	}
+	//left paddle
+	else if(num == 2){
+		if(y2 < bally && bally < y2 + 100)
+			return 1;
+		else
+			return 0;
+	}
 }
 
-else if(num==2)
-{
- if(y2<bally && bally<y2+100)
-  return 1;
- else
- return 0;
-
-}
-
-}
-
-
-void drawball(int color)
-{
-
+//Draws the ball
+void drawball(int color){
 	setcolor(color);
-	setlinestyle(SOLID_LINE, 1,1);
+	setlinestyle(SOLID_LINE, 1, 1);
 	setfillstyle(SOLID_FILL, BLACK);
-	circle(ballx,bally,10);
+	circle(ballx, bally, 10);
 }
 
-void reset()
-{
-    setcolor(WHITE);
+void reset(){
+	// Sets color and linestyle for shapes and the fillstyle for the bar(paddle)
+	setcolor(WHITE);
 	setlinestyle(SOLID_LINE,1,1);
-		setfillstyle(SOLID_FILL, WHITE);
+	setfillstyle(SOLID_FILL, WHITE);
+	//Draws the outer box
 	rectangle(0,0,635,480);
+	//Draws the circle
+	circle(ballx,bally, 10);
 
-    circle(ballx,bally, 10);
+	//Draws the two bars(paddles)
+	bar(620, y1, 625,y1+100 );
+	bar(10,y2,15,y2+100);
 
-    //  bar(320,250,340,260);
-
-    /* draw the bar */
-    bar(620, y1, 625,y1+100 );
-
-    bar(10,y2,15,y2+100);
-    setcolor(WHITE);
-    setlinestyle(DASHED_LINE,0,3);
-    line(300,0,300,500);
-
-
+	//Draws the centre dashed line
+	setlinestyle(DASHED_LINE,0,3);
+	line(300,0,300,500);
 }
 
 
@@ -87,181 +75,167 @@ void reset()
 
 
 
-int main()
-{
-	/* request auto detection */
+int main(){
+	// request auto detection 
 	int gdriver = DETECT, gmode, errorcode;
 
 	int key=0;
 	initgraph(&gdriver, &gmode, "C:\\TC\\BGI");
 
-	/* select the text style, direction, and size */
-    settextstyle(TRIPLEX_FONT, HORIZ_DIR, 8);
+	// select the text style, direction, and size 
+	settextstyle(TRIPLEX_FONT, HORIZ_DIR, 8);
 	setcolor(10);
-    /* create a message string */
-    sprintf(msg, "PONG", i);
 
-    /* output the message */
-    outtextxy(85,25, msg);
+	// create a message string 
+	sprintf(msg, "PONG", i);
 
-    setcolor(11);
-    settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
-    sprintf(msg, "*Rules:");
-    outtextxy(10,120, msg);
+	// output the message 
+	outtextxy(85,25, msg);
 
-	/*rules output*/
-
-	setcolor(14);
-	settextstyle(SANS_SERIF_FONT,HORIZ_DIR,3);
-	sprintf(msg,"->Player 2 press up arrow to move the bar up  ");
-	outtextxy(10,175,msg);
-/*
-  setcolor(14);
-  settextstyle(SANS_SERIF_FONT,HORIZ_DIR,3);
-  sprintf(msg,"snake.");
-  outtextxy(40,205,msg);   */
+	//Prints the rules
+	setcolor(11);
+	settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
+	sprintf(msg, "*Rules:");
+	outtextxy(10,120, msg);
 
 	setcolor(14);
 	settextstyle(SANS_SERIF_FONT,HORIZ_DIR,3);
-	sprintf(msg,"->Press Down arrow to move the bar down ");
-	outtextxy(10,245,msg);
-/*
-  setcolor(14);
-  settextstyle(SANS_SERIF_FONT,HORIZ_DIR,3);
-  sprintf(msg,"snake.");
-  outtextxy(40,275,msg);    */
 
-	setcolor(14);
-	settextstyle(SANS_SERIF_FONT,HORIZ_DIR,3);
-	sprintf(msg,"->Player 1 press W arrow to move the bar up ");
-	outtextxy(10,385,msg);
-/*
-  setcolor(14);
-  settextstyle(SANS_SERIF_FONT,HORIZ_DIR,3);
-  sprintf(msg,"you lose the game.");
-  outtextxy(40,415,msg);*/
-	setcolor(14);
-	settextstyle(SANS_SERIF_FONT,HORIZ_DIR,3);
-	sprintf(msg,"-> press S arrow to move the bar up ");
-	outtextxy(10,315,msg);
+	outtextxy(10, 175, "->Player 1 press W arrow to move the bar up ");
+	outtextxy(10, 225, "->Press S arrow to move the bar down");
+	outtextxy(10, 275, "->Player 2 press up arrow to move the bar up");
+	outtextxy(10, 325, "->Press Down arrow to move the bar down ");
+	outtextxy(10, 375, "Press any key to start the game")
 
-/*  setcolor(14);
-  settextstyle(SANS_SERIF_FONT,HORIZ_DIR,3);
-  sprintf(msg,"increase in size");
-  outtextxy(40,345,msg);       */
-
-	delay(700);
+	// If user presses a key, clears instructions
+	getch();
 	cleardevice();
 
-
-
-/* initialize graphics and local
-variables */
-    setcolor(WHITE);
-    setfillstyle(SOLID_FILL, WHITE);
+	// Draw map
+	setcolor(WHITE);
+	setfillstyle(SOLID_FILL, WHITE);
 	circle(ballx, bally, 10);
-    rectangle(0,0,635,480);
-
+	rectangle(0,0,635,480);
 	bar(620, y1, 625,y1+100 );
-    bar(10,y2,15,y2+100);
-    setlinestyle(DASHED_LINE,0,3);
-    line(300,0,300,500);
+	bar(10,y2,15,y2+100);
+	setlinestyle(DASHED_LINE,0,3);
+	line(300,0,300,500);
 
-    while(1){
+	//Game runs till one player scores 5
+	while(1){
 		drawball(0);
 
 		ballx+=velx;
 		bally+=vely;
 
+		// Ball within paddle x-coordinate, check if it touches the paddle, if yes reverse the ball
 		if(ballx>610 && ballx<625){
 			if(checkCol(1)==1)
 				velx= -velx;
-
-
 		}
 		else if(ballx<25 && ballx>15){
 			if(checkCol(2)==1)
 				velx= -velx;
-
 		}
-		else if(ballx>625){
-		velx+=velx;
-		delay(100);
-		ballx=tempballx;
-		bally=tempbally;
+		// Ball is touching the end of the map
+		if(ballx>625){
+			velx+=velx;
+			delay(100);
+			ballx=tempballx;
+			bally=tempbally;
+			//erase prev map
 			setfillstyle(SOLID_FILL, BLACK);
 			bar(0,0,getmaxx(),getmaxy());
-		  y1=tempy1;
-		  y2=tempy2;
-
-
-		velx=tempx;
-		reset();
-		getch();
+			y1=tempy1;
+			y2=tempy2;
+			velx=tempx;
+			//reset screen to starting position
+			reset();
+			getch();
 		}
 		else if(ballx<15){
-		velx+=velx;
-		delay(100);
-		ballx=tempballx;
-		bally=tempbally;
+			velx+=velx;
+			delay(100);
+			ballx=tempballx;
+			bally=tempbally;
+			//erase prev map
 			setfillstyle(SOLID_FILL, BLACK);
 			bar(0,0,getmaxx(),getmaxy());
-		   y1=tempy1;
-		   y2=tempy2;
+			y1=tempy1;
+			y2=tempy2;
+			velx=tempx;
+			//reset screen to starting position
+			reset();
+			getch();
+		}
 
-		velx=tempx;
-		reset();
-		getch();
-	       }
+		//Checks if ball is touching the top or bottom of the map, if yes then reverse its direction
 		if(bally<10){
 			vely= -vely;
 		}
-
-		if(bally>460){
+		else if(bally>460){
 			vely= -vely;
 		}
+		//Draw the ball
 		drawball(15);
 		delay(40);
 		reset();
+		// If a key is pressed, then move paddles
 		while(kbhit()){
 			key=getch();
+			//if key is alphabetical, convert to lowercase
+			if (isalpha(key))
+				key = tolower(key);
 			switch(key){
+				//Up arrow pressed
 				case 72:
 					if(y1!=10){
+						//erase prev bar
 						setfillstyle(SOLID_FILL, BLACK);
 						bar(620, y1, 625,y1+100 );
+						//Change y coordinate and draw new bar
 						y1=y1-10;
 						setfillstyle(SOLID_FILL, WHITE);
 						bar(620, y1, 625,y1+100 );
 					}
 					break;
+				//Down arrow pressed
 				case 80:
 					if(y1!=370){
+						//erase prev bar
 						setfillstyle(SOLID_FILL, BLACK);
 						bar(620, y1, 625,y1+100 );
+						//Change y coordinate and draw new bar
 						y1=y1+10;
 						setfillstyle(SOLID_FILL, WHITE);
 						bar(620, y1, 625,y1+100 );
 					}
 					break;
+				//w key pressed
 				case 119:
 					if(y2!=10){
+						//erase prev bar
 						setfillstyle(SOLID_FILL, BLACK);
 						bar(10, y2, 15,y2+100 );
+						//Change y coordinate and draw new bar
 						y2=y2-10;
 						setfillstyle(SOLID_FILL, WHITE);
 						bar(10, y2, 15,y2+100 );
 					}
 					break;
+				//s key pressed
 				case 115:
 					if(y2!=370){
+						//erase prev bar
 						setfillstyle(SOLID_FILL, BLACK);
 						bar(10, y2, 15,y2+100 );
+						//Change y coordinate and draw new bar
 						y2=y2+10;
 						setfillstyle(SOLID_FILL, WHITE);
 						bar(10, y2, 15,y2+100 );
 					}
 					break;
+				// If esc key pressed, exit program
 				case 27: exit(0);
 			}
 		}
