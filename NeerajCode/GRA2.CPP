@@ -98,7 +98,7 @@ int main(){
 	outtextxy(10, 225, "->Press S arrow to move the bar down");
 	outtextxy(10, 275, "->Player 2 press up arrow to move the bar up");
 	outtextxy(10, 325, "->Press Down arrow to move the bar down ");
-	outtextxy(10, 375, "Press any key to start the game")
+	outtextxy(10, 375, "Press any key to start the game");
 
 	// If user presses a key, clears instructions
 	getch();
