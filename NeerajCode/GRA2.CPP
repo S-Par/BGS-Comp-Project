@@ -11,13 +11,17 @@ char msg[80];
 
 
 int y1=200;
+int tempy1=200;
 int y2 = 200;
+int tempy2=200;
 int i=1;
-float velx=4;
-float tempx=4;
-float vely=-4;
+float velx=10;
+float tempx=10;
+float vely=-10;
 float ballx=300;
+float tempballx=300;
 float bally=250;
+float tempbally=250;
 float linex,liney;
 
 int checkCol(int num)
@@ -26,7 +30,7 @@ int checkCol(int num)
  if(num==1)  //right
 {
 
-if(y1<bally<y1+100)
+if(y1<bally && bally<y1+100)
   return 1;
 else
  return 0;
@@ -35,7 +39,7 @@ else
 
 else if(num==2)
 {
- if(y1<bally<y1+100)
+ if(y2<bally && bally<y2+100)
   return 1;
  else
  return 0;
@@ -54,14 +58,14 @@ void drawball(int color)
 	circle(ballx,bally,10);
 }
 
-  void reset()
+void reset()
 {
+    setcolor(WHITE);
 	setlinestyle(SOLID_LINE,1,1);
-	setfillstyle(SOLID_FILL, WHITE);
+		setfillstyle(SOLID_FILL, WHITE);
 	rectangle(0,0,635,480);
 
-
-    //	circle(ballx, bally, 10);
+    circle(ballx,bally, 10);
 
     //  bar(320,250,340,260);
 
@@ -69,7 +73,7 @@ void drawball(int color)
     bar(620, y1, 625,y1+100 );
 
     bar(10,y2,15,y2+100);
-
+    setcolor(WHITE);
     setlinestyle(DASHED_LINE,0,3);
     line(300,0,300,500);
 
@@ -169,20 +173,46 @@ variables */
 		ballx+=velx;
 		bally+=vely;
 
-		if(ballx>610){
+		if(ballx>610 && ballx<625){
 			if(checkCol(1)==1)
 				velx= -velx;
-			else
-			exit(0);
-		}
 
-		if(ballx<25){
+
+		}
+		else if(ballx<25 && ballx>15){
 			if(checkCol(2)==1)
 				velx= -velx;
-			else
-			exit(0);
-		}
 
+		}
+		else if(ballx>625){
+		velx+=velx;
+		delay(100);
+		ballx=tempballx;
+		bally=tempbally;
+			setfillstyle(SOLID_FILL, BLACK);
+			bar(0,0,getmaxx(),getmaxy());
+		  y1=tempy1;
+		  y2=tempy2;
+
+
+		velx=tempx;
+		reset();
+		getch();
+		}
+		else if(ballx<15){
+		velx+=velx;
+		delay(100);
+		ballx=tempballx;
+		bally=tempbally;
+			setfillstyle(SOLID_FILL, BLACK);
+			bar(0,0,getmaxx(),getmaxy());
+		   y1=tempy1;
+		   y2=tempy2;
+
+		velx=tempx;
+		reset();
+		getch();
+	       }
 		if(bally<10){
 			vely= -vely;
 		}
@@ -190,23 +220,6 @@ variables */
 		if(bally>460){
 			vely= -vely;
 		}
-		if(ballx>610){
-		velx+=velx;
-		delay(100);
-
-
-		velx=tempx;
-		reset();
-		}
-	       if(ballx<25){
-		velx+=velx;
-		delay(100);
-		reset;
-		velx=tempx;
-	       }
-
-
-
 		drawball(15);
 		delay(40);
 		reset();
@@ -232,7 +245,7 @@ variables */
 					}
 					break;
 				case 119:
-					if(y2!=10){  
+					if(y2!=10){
 						setfillstyle(SOLID_FILL, BLACK);
 						bar(10, y2, 15,y2+100 );
 						y2=y2-10;
@@ -241,7 +254,7 @@ variables */
 					}
 					break;
 				case 115:
-					if(y2!=370){  
+					if(y2!=370){
 						setfillstyle(SOLID_FILL, BLACK);
 						bar(10, y2, 15,y2+100 );
 						y2=y2+10;
