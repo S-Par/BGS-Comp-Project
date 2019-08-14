@@ -47,9 +47,30 @@ class Chat{
 		strcpy(identifier, itoa(Identifier));
 	}
 	void addMember(char username[]){
-		
+		ChatMember *ptr = new ChatMember;
+		strcpy(ptr->username, username);
+		if (members == NULL){
+			ptr->node = NULL;
+			members = ptr;
+		}	
+		else{
+			ptr->node = members;
+			members = ptr;
+		}
 	}
-}
+	void addAdmin(char username[]){
+		ChatAdmin *ptr = new ChatAdmin;
+		strcpy(ptr->username, username);
+		if (admins == NULL){
+			ptr->node = NULL;
+			admins = ptr;
+		}	
+		else{
+			ptr->node = admins;
+			admins = ptr;
+		}
+	}
+};
 
 //Function to find next chat identifier
 int nextIdentifier(){
