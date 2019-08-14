@@ -11,11 +11,8 @@
 char *checkUser(char []);
 char *acceptPassword();
 
-//linked list for chat identifiers
-struct ChatIdentifier{
-	char identifier[8];
-	ChatIdentifier *node;
-};
+
+
 
 //user class
 class User {
@@ -73,8 +70,8 @@ class User {
 	void setEmail(char usrEmail[]) {
 		strcpy(email, usrEmail);
 	}
-	//pop and push into groups
-	void push(int a){
+	//add and remove chat groups
+	void addChat(int a){
 		ChatIdentifier *ptr = new ChatIdentifier;
 		strcpy(ptr->identifier,itoa(a));
 		if (top == NULL){
@@ -86,7 +83,7 @@ class User {
 			top = ptr;
 		}
 	}
-	void pop(int a){
+	void removeChat(int a){
 		ChatIdentifier *ptr = top,*ptr1 = top;
 		char iden[] = itoa(a);
 		while(strcmp(ptr->identifier,iden)!=0){
@@ -225,5 +222,3 @@ int forgotPassword(User player) {
 
 }
 
-//Function to find next chat identifier
-int
