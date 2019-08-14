@@ -6,7 +6,7 @@
 #include<dos.h>
 #include<ctype.h>
 #include<stdio.h>
-//Neeeeeeraj 
+
 char msg[80];
 
 
