@@ -6,9 +6,7 @@
 #include<ctype.h>
 #include<stdio.h>
 
-char msg[80];
-
-
+//Global variables
 int y1=200;
 int tempy1=200;
 int y2 = 200;
@@ -86,17 +84,12 @@ int main(){
 	settextstyle(TRIPLEX_FONT, HORIZ_DIR, 8);
 	setcolor(10);
 
-	// create a message string 
-	sprintf(msg, "PONG", i);
-
-	// output the message 
-	outtextxy(85,25, msg);
+	outtextxy(85,25, "PONG");
 
 	//Prints the rules
 	setcolor(11);
 	settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
-	sprintf(msg, "*Rules:");
-	outtextxy(10,120, msg);
+	outtextxy(10,120, "*Rules");
 
 	setcolor(14);
 	settextstyle(SANS_SERIF_FONT,HORIZ_DIR,3);
