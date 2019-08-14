@@ -14,6 +14,7 @@ int y1=200;
 int y2 = 200;
 int i=1;
 float velx=4;
+float tempx=4;
 float vely=-4;
 float ballx=300;
 float bally=250;
@@ -189,6 +190,22 @@ variables */
 		if(bally>460){
 			vely= -vely;
 		}
+		if(ballx>610){
+		velx+=velx;
+		delay(100);
+
+
+		velx=tempx;
+		reset();
+		}
+	       if(ballx<25){
+		velx+=velx;
+		delay(100);
+		reset;
+		velx=tempx;
+	       }
+
+
 
 		drawball(15);
 		delay(40);
