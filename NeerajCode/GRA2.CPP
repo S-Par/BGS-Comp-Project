@@ -12,9 +12,9 @@ int tempy1=200;
 int y2 = 200;
 int tempy2=200;
 int i=1;
-float velx=10;
+float velx=4;
 float tempx=10;
-float vely=-10;
+float vely=-4;
 float ballx=300;
 float tempballx=300;
 float bally=250;
@@ -23,7 +23,7 @@ float linex,liney;
 
 //Function to check if ball hit a paddle, returns 1 if hit else returns 0
 int checkCol(int num){
-	//right paddle 
+	//right paddle
 	if(num == 1) {
 		if(y1 < bally && bally < y1 + 100)
 			return 1;
@@ -74,13 +74,13 @@ void reset(){
 
 
 int main(){
-	// request auto detection 
+	// request auto detection
 	int gdriver = DETECT, gmode, errorcode;
 
 	int key=0;
 	initgraph(&gdriver, &gmode, "C:\\TC\\BGI");
 
-	// select the text style, direction, and size 
+	// select the text style, direction, and size
 	settextstyle(TRIPLEX_FONT, HORIZ_DIR, 8);
 	setcolor(10);
 
