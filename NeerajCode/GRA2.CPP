@@ -1,10 +1,11 @@
-#include<iostream.h>
-#include<conio.h>
-#include<graphics.h>
-#include<stdlib.h>
-#include<dos.h>
-#include<ctype.h>
-#include<stdio.h>
+#include <iostream.h>
+#include <conio.h>
+#include <graphics.h>
+#include <process.h>
+#include <stdlib.h>
+#include <dos.h>
+#include <ctype.h>
+#include <stdio.h>
 
 //Global variables
 int y1=200;
@@ -13,7 +14,7 @@ int y2 = 200;
 int tempy2=200;
 int i=1;
 float velx=4;
-float tempx=10;
+float tempx=4;
 float vely=-4;
 float ballx=300;
 float tempballx=300;
@@ -176,8 +177,8 @@ int main(){
 		// If a key is pressed, then move paddles
 		while(kbhit()){
 			key=getch();
-			//if key is alphabetical, convert to lowercase
-			if (isalpha(key))
+			//if 'W' or 'S' key is pressed, convert to lowercase
+			if (key == 'W' || key == 'S')
 				key = tolower(key);
 			switch(key){
 				//Up arrow pressed
