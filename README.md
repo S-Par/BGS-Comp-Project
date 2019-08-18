@@ -1,5 +1,5 @@
  ## BGS-Comp-Project
- This is a project that provides a gaming portal. There will be game servers with admins. User friends will be there
+ This is a project that provides a gaming portal. Project is done for the CBSE Class 12 Examination
  ### Project Details
  Games provided:
  - Pac-man
