@@ -20,13 +20,13 @@ struct ChatAdmin{
 	ChatAdmin *node;
 };
 
-//linked list for chat admins
+//linked list for chat members
 struct ChatMember{
 	char username[40];
 	ChatMember *node;
 };
 
-//linked list for chat admins
+//linked list for chat messages
 struct ChatMsgs{
 	char message[300];
 	char author[40];
@@ -68,6 +68,19 @@ class Chat{
 		else{
 			ptr->node = admins;
 			admins = ptr;
+		}
+	}
+	void addMessage(char message[], char author[]){
+		ChatMsgs *ptr = new ChatMsgs;
+		strcpy(ptr->author, author);
+		strcpy(ptr->message, message);
+		if (messages == NULL){
+			ptr->node = NULL;
+			messages = ptr;
+		}	
+		else{
+			ptr->node = messages;
+			messages = ptr;
 		}
 	}
 };
