@@ -46,6 +46,7 @@ class Chat{
 		messages = NULL;
 		strcpy(identifier, itoa(Identifier));
 	}
+	// add functions
 	void addMember(char username[]){
 		ChatMember *ptr = new ChatMember;
 		strcpy(ptr->username, username);
@@ -81,6 +82,16 @@ class Chat{
 		else{
 			ptr->node = messages;
 			messages = ptr;
+		}
+	}
+	// remove functions
+	void removeMember(char username[]){
+		ChatMember *ptr1 = members, *ptr2 = members;
+		while (strcmp(ptr1->username, username) != 0) {
+			ptr1 = ptr1->node;
+		}
+		while (ptr2->node != ptr1) {
+			ptr2 = ptr2->node; 
 		}
 	}
 };
