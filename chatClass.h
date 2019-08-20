@@ -100,6 +100,7 @@ class Chat{
 		}
 		ptr2->node = ptr1->node;
 		delete ptr1;
+		// Add lines of code for removing chat from the corresponding user object
 	}
 };
 
