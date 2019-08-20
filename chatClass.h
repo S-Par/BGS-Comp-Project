@@ -90,9 +90,16 @@ class Chat{
 		while (strcmp(ptr1->username, username) != 0) {
 			ptr1 = ptr1->node;
 		}
+		if (ptr1 == members) {
+			members = members->node;
+			delete ptr1;
+			return;
+		}
 		while (ptr2->node != ptr1) {
 			ptr2 = ptr2->node; 
 		}
+		ptr2->node = ptr1->node;
+		delete ptr1;
 	}
 };
 
