@@ -156,10 +156,10 @@ int main(){
 			y2=tempy2;
 			velx=tempx;
 
-			//reset screen to starting position
+			
 
-		    reset();
-		      // outtextxy(435,25,arr2);
+		    
+		    //increment score
 			sc1++;
 			if(sc1==6){
 				settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
@@ -167,6 +167,8 @@ int main(){
 				getch();
 				exit(0);    
 			}
+			//reset screen to starting position
+			reset();
 			getch();
 
 		}
@@ -181,8 +183,7 @@ int main(){
 			y1=tempy1;
 			y2=tempy2;
 			velx=tempx;
-			//reset screen to starting position
-			reset();
+			//increments scores
 			sc2++;
 			if(sc2==6){
 				settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
@@ -190,7 +191,8 @@ int main(){
 				getch();
 				exit(0);    
 			}
-
+			//reset screen to starting position
+			reset();
 			getch();
 
 		}
