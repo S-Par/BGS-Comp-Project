@@ -93,14 +93,23 @@ class Chat{
 		if (ptr1 == members) {
 			members = members->node;
 			delete ptr1;
-			return;
+			
 		}
-		while (ptr2->node != ptr1) {
-			ptr2 = ptr2->node; 
+		else {
+			while (ptr2->node != ptr1) {
+				ptr2 = ptr2->node; 
+			}
+			ptr2->node = ptr1->node;
+			delete ptr1;
 		}
-		ptr2->node = ptr1->node;
-		delete ptr1;
-		// Add lines of code for removing chat from the corresponding user object
+		//remove chat from user
+		User obj;
+		fstream usrfile("userobj.txt", ios::in | ios::bin);
+		while (usrfile.read((char *)&obj, sizeof(obj))) {
+			if (strcmp(obj.getUsername(), username) == 0){
+				obj.removeChat(identifier);
+			}
+		}
 	}
 };
 
