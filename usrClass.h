@@ -1,5 +1,7 @@
 // Created by Siddharth Parmar
 // The user class header file
+#ifndef __usrclass_h
+#define __usrclass_h
 #include <iostream.h>
 #include <string.h>
 #include <conio.h>
