@@ -7,15 +7,21 @@
 #include <ctype.h>
 #include <stdio.h>
 
+
 //Global variables
+char arr1[12];
+char arr2[12];
+int sc1=1;
+int sc2=1;
+char ec1[1]="1";
 int y1=200;
 int tempy1=200;
 int y2 = 200;
 int tempy2=200;
 int i=1;
-float velx=4;
-float tempx=4;
-float vely=-4;
+float velx=10;
+float tempx=10;
+float vely=-10;
 float ballx=300;
 float tempballx=300;
 float bally=250;
@@ -143,9 +149,26 @@ int main(){
 			y1=tempy1;
 			y2=tempy2;
 			velx=tempx;
+
 			//reset screen to starting position
-			reset();
+
+		       reset();
+		       //	gotoxy (85,25);
+		      //	printf("%d",sc1);
+		      // outtextxy(85,25,ec1);
+			sprintf(arr1,"%d",sc1);
+
+			outtextxy(85,25,arr1);
+		      // outtextxy(435,25,arr2);
+			sc1++;
+			if(sc1==6)
+		       {settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
+			outtextxy(getmaxx()/2,getmaxy()/2,"Player 1 wins");
 			getch();
+			exit(0);    }
+
+			getch();
+
 		}
 		else if(ballx<15){
 			velx+=velx;
@@ -155,12 +178,23 @@ int main(){
 			//erase prev map
 			setfillstyle(SOLID_FILL, BLACK);
 			bar(0,0,getmaxx(),getmaxy());
-			y1=tempy1;
+				y1=tempy1;
 			y2=tempy2;
 			velx=tempx;
 			//reset screen to starting position
 			reset();
+				sprintf(arr2,"%d",sc2);
+			outtextxy(435,25,arr2);
+			outtextxy(85,25,arr1);
+			sc2++;
+			if(sc2==6)
+		       {settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
+			outtextxy(getmaxx()/2,getmaxy()/2,"Player 2 wins");
 			getch();
+			exit(0);    }
+
+			getch();
+
 		}
 
 		//Checks if ball is touching the top or bottom of the map, if yes then reverse its direction
