@@ -71,6 +71,12 @@ void reset(){
 	//Draws the centre dashed line
 	setlinestyle(DASHED_LINE,0,3);
 	line(300,0,300,500);
+
+	//Print scores
+	sprintf(arr1,"%d",sc1);
+	outtextxy(85,25,arr1);
+	sprintf(arr2,"%d",sc2);
+	outtextxy(435,25,arr2);
 }
 
 
@@ -188,11 +194,7 @@ int main(){
 			getch();
 
 		}
-		//Print scores
-		sprintf(arr1,"%d",sc1);
-		outtextxy(85,25,arr1);
-		sprintf(arr2,"%d",sc2);
-		outtextxy(435,25,arr2);
+		
 		//Checks if ball is touching the top or bottom of the map, if yes then reverse its direction
 		if(bally<10){
 			vely= -vely;
