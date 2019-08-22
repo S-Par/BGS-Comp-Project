@@ -1,7 +1,7 @@
 #include <iostream.h>
 #include <graphics.h>
 #include <conio.h>
-#include "usrClass.h"
+#include "usrclass.h"
 #include "pacclass.h"
 #include <fstream.h>
 #include <stdlib.h>
