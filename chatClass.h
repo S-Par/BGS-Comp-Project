@@ -5,6 +5,7 @@
 #include <iostream.h>
 #include <fstream.h>
 #include <stdlib.h>
+#include "usrclass.h"
 
 //Function Prototypes
 int nextIdentifier();
@@ -49,6 +50,7 @@ class Chat{
 		strcpy(identifier, itoa(Identifier));
 	}
 	// add functions
+	//add lines of code to add chat to user object
 	void addMember(char username[]){
 		ChatMember *ptr = new ChatMember;
 		strcpy(ptr->username, username);
@@ -59,6 +61,14 @@ class Chat{
 		else{
 			ptr->node = members;
 			members = ptr;
+		}
+		//add chat to user
+		User obj;
+		fstream usrfile("userobj.txt", ios::in | ios::bin);
+		while (usrfile.read((char *)&obj, sizeof(obj))) {
+			if (strcmp(obj.getUsername(), username) == 0){
+				obj.addChat(atoi(identifier));
+			}
 		}
 	}
 	void addAdmin(char username[]){
@@ -71,6 +81,14 @@ class Chat{
 		else{
 			ptr->node = admins;
 			admins = ptr;
+		}
+		//add chat to user
+		User obj;
+		fstream usrfile("userobj.txt", ios::in | ios::bin);
+		while (usrfile.read((char *)&obj, sizeof(obj))) {
+			if (strcmp(obj.getUsername(), username) == 0){
+				obj.addChat(atoi(identifier));
+			}
 		}
 	}
 	void addMessage(char message[], char author[]){
@@ -86,6 +104,7 @@ class Chat{
 			messages = ptr;
 		}
 	}
+
 	// remove functions
 	void removeMember(char username[]){
 		ChatMember *ptr1 = members, *ptr2 = members;
@@ -109,10 +128,44 @@ class Chat{
 		fstream usrfile("userobj.txt", ios::in | ios::bin);
 		while (usrfile.read((char *)&obj, sizeof(obj))) {
 			if (strcmp(obj.getUsername(), username) == 0){
-				obj.removeChat(identifier);
+				obj.removeChat(atoi(identifier));
 			}
 		}
 	}
+
+	void removeAdmin(char username[]){
+		ChatAdmin *ptr1 = admins, *ptr2 = admins;
+		while (strcmp(ptr1->username, username) != 0) {
+			ptr1 = ptr1->node;
+		}
+		if (ptr1 == admins) {
+			admins = admins->node;
+			delete ptr1;
+			
+		}
+		else {
+			while (ptr2->node != ptr1) {
+				ptr2 = ptr2->node; 
+			}
+			ptr2->node = ptr1->node;
+			delete ptr1;
+		}
+		//remove chat from user
+		User obj;
+		fstream usrfile("userobj.txt", ios::in | ios::bin);
+		while (usrfile.read((char *)&obj, sizeof(obj))) {
+			if (strcmp(obj.getUsername(), username) == 0){
+				obj.removeChat(atoi(identifier));
+			}
+		}
+	}
+
+	// promote user function
+	void promoteMember(char username[]) {
+		removeMember(username);
+		addAdmin(username);
+	}
+
 };
 
 //Function to find next chat identifier
