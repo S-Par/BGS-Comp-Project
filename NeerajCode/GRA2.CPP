@@ -11,8 +11,8 @@
 //Global variables
 char arr1[12];
 char arr2[12];
-int sc1=1;
-int sc2=1;
+int sc1=0;
+int sc2=0;
 char ec1[1]="1";
 int y1=200;
 int tempy1=200;
@@ -152,21 +152,15 @@ int main(){
 
 			//reset screen to starting position
 
-		       reset();
-		       //	gotoxy (85,25);
-		      //	printf("%d",sc1);
-		      // outtextxy(85,25,ec1);
-			sprintf(arr1,"%d",sc1);
-
-			outtextxy(85,25,arr1);
+		    reset();
 		      // outtextxy(435,25,arr2);
 			sc1++;
-			if(sc1==6)
-		       {settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
-			outtextxy(getmaxx()/2,getmaxy()/2,"Player 1 wins");
-			getch();
-			exit(0);    }
-
+			if(sc1==6){
+				settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
+				outtextxy(getmaxx()/2,getmaxy()/2,"Player 1 wins");
+				getch();
+				exit(0);    
+			}
 			getch();
 
 		}
@@ -178,25 +172,27 @@ int main(){
 			//erase prev map
 			setfillstyle(SOLID_FILL, BLACK);
 			bar(0,0,getmaxx(),getmaxy());
-				y1=tempy1;
+			y1=tempy1;
 			y2=tempy2;
 			velx=tempx;
 			//reset screen to starting position
 			reset();
-				sprintf(arr2,"%d",sc2);
-			outtextxy(435,25,arr2);
-			outtextxy(85,25,arr1);
 			sc2++;
-			if(sc2==6)
-		       {settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
-			outtextxy(getmaxx()/2,getmaxy()/2,"Player 2 wins");
-			getch();
-			exit(0);    }
+			if(sc2==6){
+				settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
+				outtextxy(getmaxx()/2,getmaxy()/2,"Player 2 wins");
+				getch();
+				exit(0);    
+			}
 
 			getch();
 
 		}
-
+		//Print scores
+		sprintf(arr1,"%d",sc1);
+		outtextxy(85,25,arr1);
+		sprintf(arr2,"%d",sc2);
+		outtextxy(435,25,arr2);
 		//Checks if ball is touching the top or bottom of the map, if yes then reverse its direction
 		if(bally<10){
 			vely= -vely;
