@@ -3,8 +3,8 @@
 //Contains all functionality for pacman implementation.
 //introduction is only non-graphics mode function
 
-#ifndef__pacclass_h
-#define__pacclass_h
+#ifndef __pacclass_h
+#define __pacclass_h
 #include <iostream.h>
 #include <graphics.h>
 #include <stdlib.h>

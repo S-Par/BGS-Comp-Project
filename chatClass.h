@@ -1,5 +1,7 @@
 // Created by Siddharth Parmar
 // The chat class header file
+#ifndef __chatclass_h
+#define __chatclass_h
 #include <iostream.h>
 #include <fstream.h>
 #include <stdlib.h>
