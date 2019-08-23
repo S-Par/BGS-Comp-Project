@@ -7,6 +7,6 @@
  ### Set-up
  - Put the .h and .txt files in the BIN directory of TurboC4/
  - Move the EGAVGA.bgi file from the BGI directory to the BIN directory
- ###REference links:
+ ### Reference links:
  https://cboard.cprogramming.com/c-programming/137880-just-another-beginner-needs-help-scrolling-text-up-down.html
  
