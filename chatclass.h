@@ -43,11 +43,11 @@ class Chat{
 	ChatMember *members;
 	ChatMsgs *messages;
 	public:
-	Chat(int Identifier){
+	Chat(int identifier){
 		admins = NULL;
 		members = NULL;
 		messages = NULL;
-		strcpy(identifier, itoa(Identifier));
+		strcpy(identifier, itoa(identifier));
 	}
 	// add functions
 	//add lines of code to add chat to user object
@@ -201,4 +201,15 @@ int nextIdentifier(){
 	chatFile<<ch;
 	chatFile().close();
 	return newIdentifier;	
+}
+
+//Function to add a chat
+void addChat(int identifier, char admin[], char members[][40], int noOfMembers) {
+	Chat newChat(identifier);
+	newChat.addAdmin(admin);
+	for (int i = 0; i < noOfMembers; i++) {
+		newChat.addMember(members[i]);
+	}
+	fstream chatFile("userchat.txt", ios::app | ios::bin);
+	chatFile.write((char *)&newChat, sizeof(newChat));
 }
