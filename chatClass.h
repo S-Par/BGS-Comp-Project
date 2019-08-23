@@ -166,6 +166,27 @@ class Chat{
 		addAdmin(username);
 	}
 
+	// demote user function
+	void demoteAdmin(char username[]){
+		removeAdmin(username);
+		addMember(username);
+	}
+	//displays the messages
+	void displayMessages(int startMsg, int lastMsg) {
+		startMsg--;
+		lastMsg--;
+		int i = 0;
+		ChatMsgs *ptr = messages;
+		while (ptr && startMsg < lastMsg + 1) {
+			if (i == startMsg) {
+				cout<<ptr->message;
+				cout<<"\nBy : "<<ptr->author<<endl;
+				startMsg++;
+			}
+			i++;
+		}
+	}
+
 };
 
 //Function to find next chat identifier
