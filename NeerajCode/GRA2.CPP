@@ -156,19 +156,17 @@ int main(){
 			y2=tempy2;
 			velx=tempx;
 
-			
-
-		    
+		    //reset screen to starting position
+			reset();
 		    //increment score
 			sc1++;
-			if(sc1==6){
+			if(sc1 == 5){
+				setcolor(WHITE);
 				settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
-				outtextxy(getmaxx()/2,getmaxy()/2,"Player 1 wins");
+				outtextxy(180, 175, "Player 1 wins");
 				getch();
 				exit(0);    
 			}
-			//reset screen to starting position
-			reset();
 			getch();
 
 		}
@@ -183,16 +181,17 @@ int main(){
 			y1=tempy1;
 			y2=tempy2;
 			velx=tempx;
+			//reset screen to starting position
+			reset();
 			//increments scores
 			sc2++;
-			if(sc2==6){
+			if(sc2 == 5){
+				setcolor(WHITE);
 				settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
-				outtextxy(getmaxx()/2,getmaxy()/2,"Player 2 wins");
+				outtextxy(180, 175, "Player 2 wins");
 				getch();
 				exit(0);    
 			}
-			//reset screen to starting position
-			reset();
 			getch();
 
 		}
