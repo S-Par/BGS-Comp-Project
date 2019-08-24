@@ -242,3 +242,5 @@ void deleteChat(int identifier) {
 	remove("userchat.txt");
 	rename("tempchat.txt", "userchat.txt");
 }
+
+#endif

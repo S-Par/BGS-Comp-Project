@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <graphics.h>
 #include <fstream.h>
+#include "chatclass.h"
 
 // Function Prototypes
 char *checkUser(char []);
@@ -229,3 +230,4 @@ int forgotPassword(User player) {
 
 }
 
+#endif
