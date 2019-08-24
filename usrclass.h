@@ -101,13 +101,13 @@ class User {
 		ptr1->node = ptr->node;
 		delete ptr;
 	}
-	//Register function
+	//Register function, returns 1 if unsuccessful else returns 0
 	int regUser() {
 		char usrname[40], pwd[40], pwdCh = '2';
 		//User is already registered, show message and exit
 		if (strcmp(isRegistered, "True") == 0) {
 			cout<<"\nYou are already registered";
-			return 0;
+			return 1;
 		}
 		//Ask for user details
 		cout<<"\nEnter username:";
@@ -140,6 +140,7 @@ class User {
 			//set isRegistered to True
 			strcpy(isRegistered, "True");
 		}
+		return 0;
 	}
 
 	//Changes the password if correct existing password is entered

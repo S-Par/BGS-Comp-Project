@@ -73,7 +73,7 @@ class Chat{
 		}
 		//add chat to user
 		User obj;
-		fstream usrfile("userobj.txt", ios::in | ios::bin);
+		fstream usrfile("userobj.txt", ios::in | ios::binary);
 		while (usrfile.read((char *)&obj, sizeof(obj))) {
 			if (strcmp(obj.getUsername(), username) == 0){
 				obj.addChat(atoi(identifier));
@@ -94,7 +94,7 @@ class Chat{
 		}
 		//add chat to user
 		User obj;
-		fstream usrfile("userobj.txt", ios::in | ios::bin);
+		fstream usrfile("userobj.txt", ios::in | ios::binary);
 		while (usrfile.read((char *)&obj, sizeof(obj))) {
 			if (strcmp(obj.getUsername(), username) == 0){
 				obj.addChat(atoi(identifier));
@@ -136,7 +136,7 @@ class Chat{
 		}
 		//remove chat from user
 		User obj;
-		fstream usrfile("userobj.txt", ios::in | ios::bin);
+		fstream usrfile("userobj.txt", ios::in | ios::binary);
 		while (usrfile.read((char *)&obj, sizeof(obj))) {
 			if (strcmp(obj.getUsername(), username) == 0){
 				obj.removeChat(atoi(identifier));
@@ -164,7 +164,7 @@ class Chat{
 		}
 		//remove chat from user
 		User obj;
-		fstream usrfile("userobj.txt", ios::in | ios::bin);
+		fstream usrfile("userobj.txt", ios::in | ios::binary);
 		while (usrfile.read((char *)&obj, sizeof(obj))) {
 			if (strcmp(obj.getUsername(), username) == 0){
 				obj.removeChat(atoi(identifier));
@@ -223,15 +223,15 @@ void addChat(int identifier, char admin[], char members[][40], int noOfMembers) 
 	for (int i = 0; i < noOfMembers; i++) {
 		newChat.addMember(members[i]);
 	}
-	fstream chatFile("userchat.txt", ios::app | ios::bin);
+	fstream chatFile("userchat.txt", ios::app | ios::binary);
 	chatFile.write((char *)&newChat, sizeof(newChat));
 	chatFile.close();
 }
 
 void deleteChat(int identifier) {
 	Chat newChat(identifier);
-	fstream chatFile("userchat.txt", ios::in | ios::bin);
-	fstream tempFile("tempchat.txt", ios::out | ios::bin);
+	fstream chatFile("userchat.txt", ios::in | ios::binary);
+	fstream tempFile("tempchat.txt", ios::out | ios::binary);
 	while (chatfile.read((char *)&newChat, sizeof(newChat))) {
 		if (newChat.getIdentifier() != identifier){
 			tempFile.write((char *)&newChat, sizeof(newChat));
