@@ -407,6 +407,8 @@ class Character {
 class Pacman: public Character{
 	int score;
 	int life;
+	//The username of the user
+	char name[40];
 	//counts when powerPellet is active
 	int powerPelCounter;
 	public:
@@ -432,11 +434,17 @@ class Pacman: public Character{
 	int getLife(){
 		return life;
 	}
+	char *getName(){
+		return name;
+	}
 	void setScore(int newScore){
 		score = newScore;
 	}
 	void setLife(int newLife){
 		life = newLife;
+	}
+	void setName(char username[]){
+		strcpy(name, username);
 	}
 };
 
@@ -967,6 +975,9 @@ Pacman mainGame() {
 			//set ghost powerpellet to that of pac man
 			ghost[i].setPowerPellet(pac.getPowerPellet());
 		}
+		//draw pac-man(to make sure no overlaps hide pacman)
+		pac.pacErase();
+		pac.pacDraw(direction);
 		for (int j = 0; j < 4; j++) {
 			//if ghost and pac overlap
 			if (ghost[j].getXco() == pac.getXco() && ghost[j].getYco() == pac.getYco()) {
