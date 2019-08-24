@@ -11,8 +11,8 @@
 //Global variables
 char arr1[12];
 char arr2[12];
-int sc1=0;
-int sc2=0;
+int scorePlayer1=0;
+int scorePlayer2=0;
 char ec1[1]="1";
 int y1=200;
 int tempy1=200;
@@ -73,9 +73,9 @@ void reset(){
 	line(300,0,300,500);
 
 	//Print scores
-	sprintf(arr1,"%d",sc1);
+	sprintf(arr1,"%d",scorePlayer1);
 	outtextxy(85,25,arr1);
-	sprintf(arr2,"%d",sc2);
+	sprintf(arr2,"%d",scorePlayer2);
 	outtextxy(435,25,arr2);
 }
 
@@ -159,8 +159,8 @@ int main(){
 		    //reset screen to starting position
 			reset();
 		    //increment score
-			sc1++;
-			if(sc1 == 5){
+			scorePlayer1++;
+			if(scorePlayer1 == 5){
 				setcolor(WHITE);
 				settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
 				outtextxy(180, 175, "Player 1 wins");
@@ -184,8 +184,8 @@ int main(){
 			//reset screen to starting position
 			reset();
 			//increments scores
-			sc2++;
-			if(sc2 == 5){
+			scorePlayer2++;
+			if(scorePlayer2 == 5){
 				setcolor(WHITE);
 				settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
 				outtextxy(180, 175, "Player 2 wins");
