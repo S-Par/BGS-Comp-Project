@@ -11,8 +11,8 @@
 //Global variables
 char arr1[12];
 char arr2[12];
-int scorePlayer1=0;
-int scorePlayer2=0;
+int sc1=0;
+int sc2=0;
 char ec1[1]="1";
 int y1=200;
 int tempy1=200;
@@ -73,9 +73,9 @@ void reset(){
 	line(300,0,300,500);
 
 	//Print scores
-	sprintf(arr1,"%d",scorePlayer1);
+	sprintf(arr1,"%d",sc1);
 	outtextxy(85,25,arr1);
-	sprintf(arr2,"%d",scorePlayer2);
+	sprintf(arr2,"%d",sc2);
 	outtextxy(435,25,arr2);
 }
 
@@ -95,17 +95,17 @@ int main(){
 
 	// select the text style, direction, and size
 	settextstyle(TRIPLEX_FONT, HORIZ_DIR, 8);
-	setcolor(10);
+	setcolor(4);
 
-	outtextxy(85,25, "PONG");
+	outtextxy(195,25, "PONG");
 
 	//Prints the rules
-	setcolor(11);
-	settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
+	setcolor(10);
+	settextstyle(SIMPLEX_FONT, HORIZ_DIR, 5);
 	outtextxy(10,120, "*Rules");
 
 	setcolor(14);
-	settextstyle(SANS_SERIF_FONT,HORIZ_DIR,3);
+	settextstyle(TRIPLEX_SCR_FONT,HORIZ_DIR,3);
 
 	outtextxy(10, 175, "->Player 1 press W arrow to move the bar up ");
 	outtextxy(10, 225, "->Press S arrow to move the bar down");
@@ -156,17 +156,21 @@ int main(){
 			y2=tempy2;
 			velx=tempx;
 
-		    //reset screen to starting position
-			reset();
+
+
+
 		    //increment score
-			scorePlayer1++;
-			if(scorePlayer1 == 5){
+			sc1++;
+			if(sc1==5){
+
 				setcolor(WHITE);
-				settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
-				outtextxy(180, 175, "Player 1 wins");
+				settextstyle(TRIPLEX_FONT, HORIZ_DIR, 5);
+				outtextxy(180,175,"Player 1 wins");
 				getch();
-				exit(0);    
+				exit(0);
 			}
+			//reset screen to starting position
+			reset();
 			getch();
 
 		}
@@ -181,21 +185,21 @@ int main(){
 			y1=tempy1;
 			y2=tempy2;
 			velx=tempx;
+			//increments scores
+			sc2++;
+			if(sc2==5){
+				setcolor(WHITE);
+				settextstyle(TRIPLEX_FONT, HORIZ_DIR, 5);
+				outtextxy(180,175,"Player 2 wins");
+				getch();
+				exit(0);
+			}
 			//reset screen to starting position
 			reset();
-			//increments scores
-			scorePlayer2++;
-			if(scorePlayer2 == 5){
-				setcolor(WHITE);
-				settextstyle(GOTHIC_FONT, HORIZ_DIR, 5);
-				outtextxy(180, 175, "Player 2 wins");
-				getch();
-				exit(0);    
-			}
 			getch();
 
 		}
-		
+
 		//Checks if ball is touching the top or bottom of the map, if yes then reverse its direction
 		if(bally<10){
 			vely= -vely;
