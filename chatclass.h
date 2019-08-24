@@ -5,6 +5,7 @@
 #include <iostream.h>
 #include <fstream.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "usrclass.h"
 
 //Function Prototypes
@@ -43,14 +44,22 @@ class Chat{
 	ChatMember *members;
 	ChatMsgs *messages;
 	public:
+	// Constructor
 	Chat(int identifier){
 		admins = NULL;
 		members = NULL;
 		messages = NULL;
 		strcpy(identifier, itoa(identifier));
 	}
+	//Destructor
+	~Chat() {
+		
+	}
+	// Get function
+	int getIdentifier() {
+		return atoi(identifier);
+	}
 	// add functions
-	//add lines of code to add chat to user object
 	void addMember(char username[]){
 		ChatMember *ptr = new ChatMember;
 		strcpy(ptr->username, username);
@@ -70,6 +79,7 @@ class Chat{
 				obj.addChat(atoi(identifier));
 			}
 		}
+		usrfile.close();
 	}
 	void addAdmin(char username[]){
 		ChatAdmin *ptr = new ChatAdmin;
@@ -90,6 +100,7 @@ class Chat{
 				obj.addChat(atoi(identifier));
 			}
 		}
+		usrfile.close();
 	}
 	void addMessage(char message[], char author[]){
 		ChatMsgs *ptr = new ChatMsgs;
@@ -131,6 +142,7 @@ class Chat{
 				obj.removeChat(atoi(identifier));
 			}
 		}
+		usrfile.close();
 	}
 
 	void removeAdmin(char username[]){
@@ -158,6 +170,7 @@ class Chat{
 				obj.removeChat(atoi(identifier));
 			}
 		}
+		usrfile.close();
 	}
 
 	// promote user function
@@ -212,4 +225,20 @@ void addChat(int identifier, char admin[], char members[][40], int noOfMembers) 
 	}
 	fstream chatFile("userchat.txt", ios::app | ios::bin);
 	chatFile.write((char *)&newChat, sizeof(newChat));
+	chatFile.close();
+}
+
+void deleteChat(int identifier) {
+	Chat newChat(identifier);
+	fstream chatFile("userchat.txt", ios::in | ios::bin);
+	fstream tempFile("tempchat.txt", ios::out | ios::bin);
+	while (chatfile.read((char *)&newChat, sizeof(newChat))) {
+		if (newChat.getIdentifier() != identifier){
+			tempFile.write((char *)&newChat, sizeof(newChat));
+		}
+	}
+	chatFile.close();
+	tempFile.close();
+	remove("userchat.txt");
+	rename("tempchat.txt", "userchat.txt");
 }
