@@ -38,6 +38,10 @@ class User {
 		strcpy(isRegistered, "False");
 		top = NULL;
 	}
+	//destructor
+	~User(){
+		
+	}
 	//getter and setter methods
 	char *getUsername() {
 		return username;
