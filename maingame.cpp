@@ -34,7 +34,7 @@ int main() {
 	}
 
 	//play pacman
-	pacmanGame();
+	pacmanGame(player);
 	/*
 	Reading from file, disabled till file is rewritten with new objects
 	fstream file("pacscore.txt", ios::in|ios::binary);
@@ -49,7 +49,7 @@ int main() {
 }
 
 //Function for implementing the game pacman
-void pacmanGame() {
+void pacmanGame(User player) {
 
 	//introduction
 	introduction();
@@ -78,7 +78,7 @@ void pacmanGame() {
 	map();
 	//Start game and store pacman object within pac
 	Pacman pac = mainGame();
-
+	pac.setName(player.getUsername());
 	// clean up
 	closegraph();
 
@@ -112,7 +112,14 @@ void pacmanGame() {
 	//close file
 	file.close();
 	*/
+	//Change back to out soon
 	fstream output("pacscore.txt", ios::out | ios::binary);
+	output.write((char *)&pac, sizeof(pac));
+	output.close();
+	fstream input("pacscore.txt", ios::in | ios::binary);
+	while(input.read((char *)&pac, sizeof(pac))) {
+		cout<<pac.getName()<<" "<<pac.getScore()<<endl;
+	}
 }
 
 //sorts an array of pac objects in descending order of scores
