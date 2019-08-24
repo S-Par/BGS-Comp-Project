@@ -14,7 +14,11 @@
 char *checkUser(char []);
 char *acceptPassword();
 
-
+//linked list for chat identifiers
+struct ChatIdentifier{
+	char identifier[8];
+	ChatIdentifier *node;
+};
 
 
 //user class
