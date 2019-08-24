@@ -16,11 +16,15 @@ void sortPac(Pacman pacm[]);
 
 int main() {
 	clrscr();
+	// Make a User obj and register it
 	User player;
-	player.regUser();
-	fstream user("userobj.txt", ios::out|ios::binary);
-	user.write((char *)&player, sizeof(player));
-	user.close();
+	int counter = player.regUser();
+	//write user object to the file
+	if (counter == 0){
+		fstream user("userobj.txt", ios::app|ios::binary);
+		user.write((char *)&player, sizeof(player));
+		user.close();
+	}
 	//introduction
 	char activeGame[7] = "pacman";
 	graphicsGameIntro(activeGame);
@@ -31,13 +35,15 @@ int main() {
 
 	//play pacman
 	pacmanGame();
-
+	/*
+	Reading from file, disabled till file is rewritten with new objects
 	fstream file("pacscore.txt", ios::in|ios::binary);
 	Pacman obj;
 	while (file.read((char*)&obj, sizeof(obj))){
 		cout<<"\nScore:"<<obj.getScore();
 	}
 	file.close();
+	*/
 	getch();
 	return 0;
 }
@@ -76,6 +82,8 @@ void pacmanGame() {
 	// clean up
 	closegraph();
 
+	/*
+	Temporarily commented till new file created
 	//Creating objects for file reading
 	Pacman pacm[10],obj;
 	int i = 0;
@@ -103,7 +111,8 @@ void pacmanGame() {
 	}
 	//close file
 	file.close();
-
+	*/
+	fstream output("pacscore.txt", ios::out | ios::binary);
 }
 
 //sorts an array of pac objects in descending order of scores
