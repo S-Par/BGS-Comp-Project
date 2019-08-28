@@ -19,9 +19,9 @@ int tempy1=200;
 int y2 = 200;
 int tempy2=200;
 int i=1;
-float velx=10;
-float tempx=10;
-float vely=-10;
+float velx=-4;
+float tempx=-4;
+float vely=-4;
 float ballx=300;
 float tempballx=300;
 float bally=250;
@@ -130,7 +130,23 @@ int main(){
 	//Game runs till one player scores 5
 	while(1){
 		drawball(0);
-
+		/*
+		For random directions:
+		int a = random(2);
+		if (a == 1){
+			velx is +ve
+		}
+		else{
+			velx is -ve
+		}
+		a = random(2);
+		if (a == 1){
+			vely is +ve
+		}
+		else{
+			vely is -ve
+		}
+		*/
 		ballx+=velx;
 		bally+=vely;
 
