@@ -8,12 +8,17 @@
 #include <stdlib.h>
 #include <graphics.h>
 #include <fstream.h>
+#include "chatclass.h"
 
 // Function Prototypes
 char *checkUser(char []);
 char *acceptPassword();
 
-
+//linked list for chat identifiers
+struct ChatIdentifier{
+	char identifier[8];
+	ChatIdentifier *node;
+};
 
 
 //user class
@@ -229,3 +234,4 @@ int forgotPassword(User player) {
 
 }
 
+#endif

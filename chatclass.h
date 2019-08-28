@@ -12,11 +12,7 @@
 int nextIdentifier();
 
 // Last chat identifier is stored in file usrChatIden.txt
-//linked list for chat identifiers
-struct ChatIdentifier{
-	char identifier[8];
-	ChatIdentifier *node;
-};
+
 
 //linked list for chat admins
 struct ChatAdmin{
@@ -242,3 +238,5 @@ void deleteChat(int identifier) {
 	remove("userchat.txt");
 	rename("tempchat.txt", "userchat.txt");
 }
+
+#endif
