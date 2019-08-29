@@ -1,6 +1,8 @@
 #include <iostream.h>
 #include <graphics.h>
 #include <conio.h>
+#include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 //Function prototypes
@@ -8,22 +10,49 @@ void startGraphicsMode();
 void drawPac(int);
 void drawPong(int);
 void graphicsGameIntro(char[]);
+void intro();
 
 int main(){
-    graphicsGameIntro();
-    getch();
+    //graphicsGameIntro("pacman");
+    intro();
+    //getch();
     return 0;
+}
+
+//Overall introduction
+void intro(){
+	startGraphicsMode();
+	moveto(250,150);
+	settextjustify(CENTER_TEXT, CENTER_TEXT);
+	settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 3);
+	outtext("Welcome to ");
+	moverel(120, 0);
+	settextstyle(TRIPLEX_FONT, HORIZ_DIR, 3);
+	outtext("ElEMENT");
+	getch();
+	cleardevice();
+	closegraph();
 }
 
 //Introduction in graphics
 void graphicsGameIntro(char activeGame[]) {
 
 	startGraphicsMode();
-
+	/*
+	Text styles:
+	char *fname[] = { "DEFAULT font",
+		"TRIPLEX font",
+		"SMALL font",
+		"SANS SERIF font",
+		"GOTHIC font"
+	};
+	*/
 	//display text
-	outtextxy(120, 50, "Toggle by pressing a(to go left) or d(to go right)");
-	outtextxy(120, 75, "press enter to select the active game");
+	settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 1);
+	outtextxy(100, 50, "Toggle by pressing a(to go left) or d(to go right)");
+	outtextxy(100, 75, "    Press enter to select the active game");
 	//draw the circle for pacman and square for pong
+	settextstyle(DEFAULT_FONT, HORIZ_DIR, 1);
 	drawPac(1);
 	drawPong(0);
 	//Take user input till the user presses enter, toggle between pacman and pong
