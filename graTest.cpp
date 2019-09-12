@@ -28,7 +28,9 @@ void intro(){
 	outtext("Welcome to ");
 	moverel(120, 0);
 	settextstyle(TRIPLEX_FONT, HORIZ_DIR, 3);
-	outtext("ElEMENT");
+	rectangle(315, 135, 355, 175);
+	setcolor(RED);
+	outtext("Pr OTON");
 	getch();
 	cleardevice();
 	closegraph();
