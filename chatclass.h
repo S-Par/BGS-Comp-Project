@@ -112,7 +112,7 @@ class Chat{
 		}
 	}
 
-	// remove functions
+	// Removes a member from the chat (and removes the corresponding chat from the user object)
 	void removeMember(char username[]){
 		ChatMember *ptr1 = members, *ptr2 = members;
 		while (strcmp(ptr1->username, username) != 0) {
@@ -141,6 +141,7 @@ class Chat{
 		usrfile.close();
 	}
 
+	// Removes an admin from the chat (and removes the corresponding chat from the user object)
 	void removeAdmin(char username[]){
 		ChatAdmin *ptr1 = admins, *ptr2 = admins;
 		while (strcmp(ptr1->username, username) != 0) {
@@ -169,18 +170,18 @@ class Chat{
 		usrfile.close();
 	}
 
-	// promote user function
+	// Function to promote a member to an admin
 	void promoteMember(char username[]) {
 		removeMember(username);
 		addAdmin(username);
 	}
 
-	// demote user function
+	// Function to demote an admin to a member
 	void demoteAdmin(char username[]){
 		removeAdmin(username);
 		addMember(username);
 	}
-	//displays the messages
+	//displays the messages in chat, starting from a startMessage to the endMsg (both inclusive)
 	void displayMessages(int startMsg, int lastMsg) {
 		startMsg--;
 		lastMsg--;

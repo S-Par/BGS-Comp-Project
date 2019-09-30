@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <graphics.h>
 #include <fstream.h>
-#include "chatclass.h"
 
 // Function Prototypes
 char *checkUser(char []);
@@ -45,7 +44,7 @@ class User {
 	}
 	//destructor
 	~User(){
-		
+
 	}
 	//getter and setter methods
 	char *getUsername() {
@@ -84,7 +83,7 @@ class User {
 	//add and remove chat groups
 	void addChat(int a){
 		ChatIdentifier *ptr = new ChatIdentifier;
-		strcpy(ptr->identifier,itoa(a));
+		itoa(a, ptr->identifier);
 		if (top == NULL){
 			top = ptr;
 			top->node = NULL;
@@ -96,7 +95,7 @@ class User {
 	}
 	void removeChat(int a){
 		ChatIdentifier *ptr = top,*ptr1 = top;
-		char iden[] = itoa(a);
+		itoa(a, ptr->identifier);
 		while(strcmp(ptr->identifier,iden)!=0){
 			ptr = ptr->node;
 		}
