@@ -51,11 +51,12 @@ class Chat{
 	~Chat() {
 		
 	}
-	// Get function
+	// returns the identifier as an integer
 	int getIdentifier() {
 		return atoi(identifier);
 	}
 	// add functions
+	// Adds a member to the chat
 	void addMember(char username[]){
 		ChatMember *ptr = new ChatMember;
 		strcpy(ptr->username, username);
@@ -77,6 +78,7 @@ class Chat{
 		}
 		usrfile.close();
 	}
+	// Adds an admin to the chat
 	void addAdmin(char username[]){
 		ChatAdmin *ptr = new ChatAdmin;
 		strcpy(ptr->username, username);
@@ -98,6 +100,7 @@ class Chat{
 		}
 		usrfile.close();
 	}
+	// Adds a message to chat
 	void addMessage(char message[], char author[]){
 		ChatMsgs *ptr = new ChatMsgs;
 		strcpy(ptr->author, author);
