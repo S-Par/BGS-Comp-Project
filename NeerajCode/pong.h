@@ -48,7 +48,7 @@ Paddle::~Paddle(){
 }
 
 int Paddle::isColliding (int ballXCo, int ballYCo){
-    if (ballXCo >= xCo && ballXCo <= xCo + 15){
+    if (ballXCo + 10 >= xCo && ballXCo + 10 <= xCo + 15){
         if (ballYCo >= topYCo && ballYCo <= bottomYCo){
             return 1;
         }
