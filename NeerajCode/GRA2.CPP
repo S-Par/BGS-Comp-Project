@@ -1,3 +1,4 @@
+
 #include <iostream.h>
 #include <conio.h>
 #include <graphics.h>
@@ -11,6 +12,8 @@
 //Global variables
 char arr1[12];
 char arr2[12];
+int p1=-1;
+int p2=-1;
 int sc1=0;
 int sc2=0;
 char ec1[1]="1";
@@ -19,8 +22,11 @@ int tempy1=200;
 int y2 = 200;
 int tempy2=200;
 int i=1;
-float velx=-4;
-float tempx=-4;
+float nvelx=-4;
+
+float ntempx=-4;
+float velx=4;
+float tempx=4;
 float vely=-4;
 float ballx=300;
 float tempballx=300;
@@ -150,6 +156,7 @@ int main(){
 		ballx+=velx;
 		bally+=vely;
 
+
 		// Ball within paddle x-coordinate, check if it touches the paddle, if yes reverse the ball
 		if(ballx>610 && ballx<625){
 			if(checkCol(1)==1)
@@ -177,6 +184,8 @@ int main(){
 
 		    //increment score
 			sc1++;
+			if(velx<0)
+			velx=-1*velx;
 			if(sc1==5){
 
 				setcolor(WHITE);
@@ -202,6 +211,8 @@ int main(){
 			y2=tempy2;
 			velx=tempx;
 			//increments scores
+			if(velx>0)
+			velx=-1*velx;
 			sc2++;
 			if(sc2==5){
 				setcolor(WHITE);
