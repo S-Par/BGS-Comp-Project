@@ -41,6 +41,10 @@ class User {
 		pongHighScore = 0;
 		strcpy(isRegistered, "False");
 		top = NULL;
+		age = 0;
+		strcpy(username, "Default");
+		strcpy(password, "Default");
+		strcpy(email, "Default");
 	}
 	//destructor
 	~User(){
@@ -116,7 +120,7 @@ class User {
 		//Ask for user details
 		cout<<"\nEnter username:";
 		cin>>usrname;
-
+/*
 		//Check file if user with same username  is registered
 		char available[7];
 		strcpy(available, checkUser(usrname));
@@ -127,7 +131,7 @@ class User {
 			clrscr();
 			regUser();
 		}
-		else{
+		else{*/
 			// Password entry
 			int i = 0;
 			cout<<"Enter password(39 characters or below):";
@@ -143,7 +147,7 @@ class User {
 			cin>>email;
 			//set isRegistered to True
 			strcpy(isRegistered, "True");
-		}
+		//}
 		return 0;
 	}
 
