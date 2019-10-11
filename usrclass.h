@@ -85,12 +85,10 @@ class User {
 		strcpy(email, usrEmail);
 	}
 	//add and remove chat groups
-	/*
-	Correct char *itoa(int value, char *string, int radix);
-	radix shud be 10
+	// Adds a chat for the user, requires identifier as a parameter
 	void addChat(int a){
 		ChatIdentifier *ptr = new ChatIdentifier;
-		itoa(a, ptr->identifier);
+		itoa(a, ptr->identifier, 10);
 		if (top == NULL){
 			top = ptr;
 			top->node = NULL;
@@ -100,6 +98,7 @@ class User {
 			top = ptr;
 		}
 	}
+	// Removes a chat for the user, requires identifier as a parameter
 	void removeChat(int a){
 		ChatIdentifier *ptr = top,*ptr1 = top;
 		itoa(a, ptr->identifier);
@@ -111,7 +110,7 @@ class User {
 		}
 		ptr1->node = ptr->node;
 		delete ptr;
-	} */
+	} 
 	//Register function, returns 1 if unsuccessful else returns 0
 	int regUser() {
 		char usrname[40], pwd[40], pwdCh = '2';
@@ -150,7 +149,7 @@ class User {
 			cin>>email;
 			//set isRegistered to True
 			strcpy(isRegistered, "True");
-		//}
+		}
 		return 0;
 	}
 

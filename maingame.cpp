@@ -29,6 +29,7 @@ int main() {
 	fstream userfile("userobj.txt", ios::in|ios::binary);
 	while (userfile.read((char *)&player, sizeof(player))){
 		cout<<player.getUsername()<<endl;
+		getch();
 	}
 	userfile.close();
 	*/
@@ -120,7 +121,7 @@ void pacmanGame(User player) {
 	file.close();
 	*/
 	//Change back to app soon
-	fstream output("pacscore.txt", ios::out | ios::binary);
+	fstream output("pacscore.txt", ios::app | ios::binary);
 	output.write((char *)&pac, sizeof(pac));
 	output.close();
 
