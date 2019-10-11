@@ -11,7 +11,7 @@
 void drawPac(int);
 void drawPong(int);
 void graphicsGameIntro(char[]);
-void pacmanGame();
+void pacmanGame(User player);
 void sortPac(Pacman pacm[]);
 
 int main() {
@@ -25,6 +25,13 @@ int main() {
 		user.write((char *)&player, sizeof(player));
 		user.close();
 	}
+	/*
+	fstream userfile("userobj.txt", ios::in|ios::binary);
+	while (userfile.read((char *)&player, sizeof(player))){
+		cout<<player.getUsername()<<endl;
+	}
+	userfile.close();
+	*/
 	//introduction
 	char activeGame[7] = "pacman";
 	graphicsGameIntro(activeGame);
@@ -112,14 +119,16 @@ void pacmanGame(User player) {
 	//close file
 	file.close();
 	*/
-	//Change back to out soon
+	//Change back to app soon
 	fstream output("pacscore.txt", ios::out | ios::binary);
 	output.write((char *)&pac, sizeof(pac));
 	output.close();
+
 	fstream input("pacscore.txt", ios::in | ios::binary);
 	while(input.read((char *)&pac, sizeof(pac))) {
 		cout<<pac.getName()<<" "<<pac.getScore()<<endl;
 	}
+	input.close();
 }
 
 //sorts an array of pac objects in descending order of scores

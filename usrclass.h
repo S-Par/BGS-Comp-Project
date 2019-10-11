@@ -85,6 +85,9 @@ class User {
 		strcpy(email, usrEmail);
 	}
 	//add and remove chat groups
+	/*
+	Correct char *itoa(int value, char *string, int radix);
+	radix shud be 10
 	void addChat(int a){
 		ChatIdentifier *ptr = new ChatIdentifier;
 		itoa(a, ptr->identifier);
@@ -108,7 +111,7 @@ class User {
 		}
 		ptr1->node = ptr->node;
 		delete ptr;
-	}
+	} */
 	//Register function, returns 1 if unsuccessful else returns 0
 	int regUser() {
 		char usrname[40], pwd[40], pwdCh = '2';
@@ -120,7 +123,7 @@ class User {
 		//Ask for user details
 		cout<<"\nEnter username:";
 		cin>>usrname;
-/*
+
 		//Check file if user with same username  is registered
 		char available[7];
 		strcpy(available, checkUser(usrname));
@@ -131,7 +134,7 @@ class User {
 			clrscr();
 			regUser();
 		}
-		else{*/
+		else{
 			// Password entry
 			int i = 0;
 			cout<<"Enter password(39 characters or below):";
@@ -187,9 +190,12 @@ char *checkUser(char usrname[]) {
 	User player;
 	while (user.read((char*)&player, sizeof(player))) {
 		// Checks if username is taken
-		if (strcmp(player.getUsername(), usrname) == 0)
+		if (strcmp(player.getUsername(), usrname) == 0) {
+			user.close();
 			return "False";
+		}
 	}
+	user.close();
 	return "True";
 }
 
