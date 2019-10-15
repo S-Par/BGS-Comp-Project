@@ -12,6 +12,8 @@
 
 //Constants:
 const int startPaddleTopYCo = 200;
+const int leftPaddleXco = 10;
+const int rightPaddleXco = 620;
 //Global Variables:
 int player1score = 0;
 int player2score = 0;
