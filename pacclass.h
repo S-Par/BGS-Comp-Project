@@ -371,12 +371,16 @@ class Character {
 	protected:
 	int xco;
 	int yco;
+	int prevXco;
+	int prevYco;
 	int powerPellet;
 	public:
 	//Constructor for Character class, parametrised with xco and yco values passed
 	Character (int newXco, int newYco){
 		xco = newXco;
 		yco = newYco;
+		prevXco = xco;
+		prevYco = yco;
 		powerPellet = 0;
 	}
 	//Destructor
@@ -388,6 +392,12 @@ class Character {
 	}
 	int getYco(){
 		return yco;
+	}
+	int getPrevXco(){
+		return prevXco;
+	}
+	int getPrevYco(){
+		return prevYco;
 	}
 	int getPowerPellet(){
 		return powerPellet;
@@ -562,6 +572,7 @@ void Pacman::pacMove(char direction){
 			//erasing previous position
 			pacErase();
 			//decrement yco to move up
+			prevYco = yco;
 			setYco(getYco() - 10);
 			//drawing pacman at new position
 			pacDraw(direction);
@@ -595,6 +606,7 @@ void Pacman::pacMove(char direction){
 			//erasing previous position
 			pacErase();
 			//decrement xco to move left
+			prevXco = xco;
 			setXco(getXco()-10);
 			//drawing pacman at new position
 			pacDraw(direction);
@@ -637,6 +649,7 @@ void Pacman::pacMove(char direction){
 			//erasing previous position
 			pacErase();
 			//increment yco to move down
+			prevYco = yco;
 			setYco(getYco() + 10);
 			//drawing pacman at new position
 			pacDraw(direction);
@@ -670,6 +683,7 @@ void Pacman::pacMove(char direction){
 			//erasing previous position
 			pacErase();
 			//increment xco to move right
+			prevXco = xco;
 			setXco(getXco() + 10);
 			//drawing pacman at new position
 			pacDraw(direction);
@@ -795,6 +809,7 @@ void Ghost::ghostMove(){
 			//erasing previous position
 			ghostErase();
 			//decrement yco to move up
+			prevYco = yco; 
 			setYco(getYco() - 10);
 			//drawing ghost at new position
 			ghostDraw();
@@ -823,6 +838,7 @@ void Ghost::ghostMove(){
 			//erasing previous position
 			ghostErase();
 			//decrement xco to move left
+			prevXco = xco;
 			setXco(getXco()-10);
 			//drawing ghost at new position
 			ghostDraw();
@@ -860,6 +876,7 @@ void Ghost::ghostMove(){
 			//erasing previous position
 			ghostErase();
 			//increment yco to move down
+			prevYco = yco;
 			setYco(getYco() + 10);
 			//drawing ghost at new position
 			ghostDraw();
@@ -888,6 +905,7 @@ void Ghost::ghostMove(){
 			//erasing previous position
 			ghostErase();
 			//increment xco to move right
+			prevXco = xco;
 			setXco(getXco() + 10);
 			//drawing ghost at new position
 			ghostDraw();
@@ -988,8 +1006,8 @@ Pacman mainGame() {
 		pac.pacErase();
 		pac.pacDraw(direction);
 		for (int j = 0; j < 4; j++) {
-			//if ghost and pac overlap
-			if (ghost[j].getXco() == pac.getXco() && ghost[j].getYco() == pac.getYco()) {
+			//if ghost and pac overlap or they cross paths
+			if ( (ghost[j].getXco() == pac.getXco() && ghost[j].getYco() == pac.getYco()) || (ghost[j].getXco() == pac.getPrevXco() && ghost[j].getYco() == pac.getPrevYco() && ghost[j].getPrevXco() == pac.getXco() && ghost[j].getPrevYco() == pac.getXco())) {
 				//if powerPellet active
 				if (pac.getPowerPellet() == 1) {
 					//erase the ghost
