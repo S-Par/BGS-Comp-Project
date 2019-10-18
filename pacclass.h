@@ -117,6 +117,7 @@ void instructions()
 	setcolor(YELLOW);
 	settextstyle(TRIPLEX_FONT, 0, 3);
 	outtextxy(100, 60, "INSTRUCTIONS:");
+	setcolor(LIGHTGREEN)
 	settextstyle(TRIPLEX_FONT, 0, 1);
 	outtextxy(50, 90, "1.THIS is Pac-Man:");
 	setcolor(YELLOW);
