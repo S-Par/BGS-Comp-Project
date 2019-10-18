@@ -3,35 +3,66 @@
 #include <conio.h>
 #include <string.h>
 #include <stdio.h>
+#include "usrclass.h"
 #include <stdlib.h>
 
 //Function prototypes
 void startGraphicsMode();
+void drawRegister(int);
+void drawLogin(int);
 void drawPac(int);
 void drawPong(int);
 void graphicsGameIntro(char[]);
-void intro();
+void intro(char []);
 
 int main(){
     //graphicsGameIntro("pacman");
-    intro();
+    intro("register");
     //getch();
     return 0;
 }
 
 //Overall introduction
-void intro(){
+void intro(char activeOp[]){
+	User player;
 	startGraphicsMode();
-	moveto(250,150);
+	//Moves to x = 250, y = 150 to display title text
+	moveto(270,150);
 	settextjustify(CENTER_TEXT, CENTER_TEXT);
 	settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 3);
 	outtext("Welcome to ");
 	moverel(120, 0);
+
 	settextstyle(TRIPLEX_FONT, HORIZ_DIR, 3);
-	rectangle(315, 135, 355, 175);
+	rectangle(335, 135, 375, 175);
 	setcolor(RED);
 	outtext("Pr OTON");
-	getch();
+
+	// Login and Register options
+	settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 1);
+	drawRegister(1);
+	drawLogin(0);
+
+	//Instructions for selecting an option
+	outtextxy(350, 350, "Toggle by pressing w(to go up) or s(to go down)");
+	outtextxy(350, 375, "    Press enter to select the option");
+
+	//Take user input till the user presses enter, toggle between pacman and pong
+	char ch = 1;
+	while (ch != 13) {
+		ch = getch();
+		if (ch == 'w'){
+			drawRegister(1);
+			drawLogin(0);
+			strcpy(activeOp, "Register");
+		}
+		else if (ch == 's'){
+			drawRegister(0);
+			drawLogin(1);
+			strcpy(activeOp, "Login");
+		}
+	}
+
 	cleardevice();
 	closegraph();
 }
@@ -143,6 +174,56 @@ void drawPong (int active) {
 		setfillstyle(SOLID_FILL, BLACK);
 		fillpoly(4, poly);
 		outtextxy(445, 200, "PONG");
+	}
+}
+
+void drawRegister(int active) {
+	int regPoly[8];
+	regPoly[0] = 280;
+	regPoly[1] = 200;
+	regPoly[2] = 380;
+	regPoly[3] = 200;
+	regPoly[4] = 380;
+	regPoly[5] = 230;
+	regPoly[6] = 280;
+	regPoly[7] = 230;
+
+	if (active) {
+		setcolor(BLACK);
+		setfillstyle(SOLID_FILL, WHITE);
+		fillpoly(4, regPoly);
+		outtextxy(335, 215, "Register");
+	}
+	else {
+		setcolor(WHITE);
+		setfillstyle(SOLID_FILL, BLACK);
+		fillpoly(4, regPoly);
+		outtextxy(335, 215, "Register");
+	}
+}
+
+void drawLogin(int active) {
+	int logPoly[8];
+	logPoly[0] = 280;
+	logPoly[1] = 250;
+	logPoly[2] = 380;
+	logPoly[3] = 250;
+	logPoly[4] = 380;
+	logPoly[5] = 280;
+	logPoly[6] = 280;
+	logPoly[7] = 280;
+
+	if (active) {
+		setcolor(BLACK);
+		setfillstyle(SOLID_FILL, WHITE);
+		fillpoly(4, logPoly);
+		outtextxy(330, 265, "Login");
+	}
+	else {
+		setcolor(WHITE);
+		setfillstyle(SOLID_FILL, BLACK);
+		fillpoly(4, logPoly);
+		outtextxy(330, 265, "Login");
 	}
 }
 
