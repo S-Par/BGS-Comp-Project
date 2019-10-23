@@ -8,8 +8,8 @@
 #include <string.h>
 
 //Function prototypes
-void registerUser(User &player);
-void loginUser(User &player);
+int registerUser(User &player);
+int loginUser(User &player);
 void pacmanGame(User &player);
 void sortPac(Pacman pacm[]);
 void startGraphicsMode();
@@ -22,20 +22,21 @@ void startScreen(char []);
 
 int main() {
 	clrscr();
+	start:
 	User player;
 	int optionReply;
 	char option[10] = "register";
 	startScreen(option);
-	if (strcmp(option, "register")) {
-		optionReply = registerUser();
+	if (strcmp(option, "register") == 0) {
+		optionReply = registerUser(player);
 		if (optionReply == 1){
-			startScreen(option);
+			goto start;
 		}
 	}
 	else{
-		optionReply = loginUser();
+		optionReply = loginUser(player);
 		if (optionReply == 1){
-			startScreen(option);
+			goto start;
 		}
 	}
 	/*
@@ -133,8 +134,7 @@ void pacmanGame(User &player) {
 	//close file
 	file.close();
 	*/
-	//Change back to app soon
-	fstream output("pacscore.txt", ios::out | ios::binary);
+	fstream output("pacscore.txt", ios::app | ios::binary);
 	output.write((char *)&pac, sizeof(pac));
 	output.close();
 
@@ -177,7 +177,7 @@ int loginUser(User &player){
 		// Checks if username is taken
 		if (strcmp(player.getUsername(), usrname) == 0) {
 			user.close();
-			if (player.verifyPassword(pwd) == "True"){
+			if(strcmp(player.verifyPassword(pwd),"True") == 0){
 				cout<<"\nYou have logged in successfully!";
 				successfulLogin++;
 			}
@@ -229,6 +229,9 @@ void startScreen(char activeOp[]){
 			drawRegister(0);
 			drawLogin(1);
 			strcpy(activeOp, "login");
+		}
+		else if (ch == 'q'){
+			exit(0);
 		}
 	}
 
