@@ -13,7 +13,7 @@ void drawLogin(int);
 void drawPac(int);
 void drawPong(int);
 void graphicsGameIntro(char[]);
-void intro(char []);
+void startScreen(char []);
 
 int main(){
     //graphicsGameIntro("pacman");
@@ -22,9 +22,8 @@ int main(){
     return 0;
 }
 
-//Overall introduction
-void intro(char activeOp[]){
-	User player;
+//Displays the start screen
+void startScreen(char activeOp[]){
 	startGraphicsMode();
 	//Moves to x = 250, y = 150 to display title text
 	moveto(270,150);
@@ -130,10 +129,10 @@ void startGraphicsMode(){
 
 void drawPac(int active) {
 
-		setcolor(BLACK);
-		setfillstyle(SOLID_FILL, BLACK);
-		fillellipse(200, 200, 60, 60);
-		outtextxy(175, 200, "PACMAN");
+	setcolor(BLACK);
+	setfillstyle(SOLID_FILL, BLACK);
+	fillellipse(200, 200, 60, 60);
+	outtextxy(175, 200, "PACMAN");
 	if (active) {
 		setcolor(BLACK);
 		setfillstyle(SOLID_FILL, YELLOW);
@@ -192,13 +191,13 @@ void drawRegister(int active) {
 		setcolor(BLACK);
 		setfillstyle(SOLID_FILL, WHITE);
 		fillpoly(4, regPoly);
-		outtextxy(335, 215, "Register");
+		outtextxy(335, 210, "Register");
 	}
 	else {
 		setcolor(WHITE);
 		setfillstyle(SOLID_FILL, BLACK);
 		fillpoly(4, regPoly);
-		outtextxy(335, 215, "Register");
+		outtextxy(335, 210, "Register");
 	}
 }
 
@@ -217,14 +216,53 @@ void drawLogin(int active) {
 		setcolor(BLACK);
 		setfillstyle(SOLID_FILL, WHITE);
 		fillpoly(4, logPoly);
-		outtextxy(330, 265, "Login");
+		outtextxy(330, 260, "Login");
 	}
 	else {
 		setcolor(WHITE);
 		setfillstyle(SOLID_FILL, BLACK);
 		fillpoly(4, logPoly);
-		outtextxy(330, 265, "Login");
+		outtextxy(330, 260, "Login");
 	}
 }
 
+void registerUser(User &player){
+	int counter = player.regUser();
+	// If counter = 0, user registered successfully
+	// Write user obj to file
+	if (counter == 0){
+		fstream user("userobj.txt", ios::app|ios::binary);
+		user.write((char *)&player, sizeof(player));
+		user.close();
+	}
+}
 
+void loginUser(User &player){
+	char usrname[40], pwd[40], pwdCh = '2';
+	cout<<"\nEnter username:";
+	cin>>usrname;
+	// Password entry
+	int i = 0;
+	cout<<"Enter password(39 characters or below):";
+	strcpy(pwd, acceptPassword());
+	// Open user file to check
+	fstream user("userobj.txt", ios::in|ios::binary);
+	int successfulLogin = 0;
+	while (user.read((char*)&player, sizeof(player))) {
+		// Checks if username is taken
+		if (strcmp(player.getUsername(), usrname) == 0) {
+			user.close();
+			if (player.verifyPassword(pwd) == "True"){
+				cout<<"\nYou have logged in successfully!";
+				successfulLogin++;
+			}
+			break;
+		}
+	}
+	user.close();
+	if (successfulLogin == 0){
+		cout<<"\nSorry, details didn't match!";
+		delay(2000);
+		startScreen();
+	}
+}
