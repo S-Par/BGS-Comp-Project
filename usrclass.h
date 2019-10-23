@@ -57,6 +57,7 @@ class User {
 	char *getEmail() {
 		return email;
 	}
+	//Checks if password matches
 	char *verifyPassword(char pwd[]) {
 		if (strcmp(password, pwd) == 0)
 			return "True";
@@ -128,10 +129,15 @@ class User {
 		strcpy(available, checkUser(usrname));
 		if (strcmp(available, "False") == 0) {
 			cout<<"Sorry! Username is taken";
-			cout<<"\nType any character to try again";
-			getch();
+			cout<<"\nType r to try again \nType any other character to go back to start screen";
+			char ch = getch();
 			clrscr();
-			regUser();
+			if (ch == 'r')
+				regUser();
+			else{
+				return 1;
+			}
+			
 		}
 		else{
 			// Password entry
