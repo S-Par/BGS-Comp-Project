@@ -185,7 +185,7 @@ int main(){
 		    //increment score
 			sc1++;
 			if(velx<0)
-			velx=-1*velx;
+			velx=-1*velx;//changes the server to whoevr loses the point
 			if(sc1==5){
 
 				setcolor(WHITE);
