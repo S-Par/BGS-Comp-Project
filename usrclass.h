@@ -41,6 +41,10 @@ class User {
 		pongHighScore = 0;
 		strcpy(isRegistered, "False");
 		top = NULL;
+		age = 0;
+		strcpy(username, "Default");
+		strcpy(password, "Default");
+		strcpy(email, "Default");
 	}
 	//destructor
 	~User(){
@@ -53,6 +57,7 @@ class User {
 	char *getEmail() {
 		return email;
 	}
+	//Checks if password matches
 	char *verifyPassword(char pwd[]) {
 		if (strcmp(password, pwd) == 0)
 			return "True";
@@ -81,9 +86,10 @@ class User {
 		strcpy(email, usrEmail);
 	}
 	//add and remove chat groups
+	// Adds a chat for the user, requires identifier as a parameter
 	void addChat(int a){
 		ChatIdentifier *ptr = new ChatIdentifier;
-		itoa(a, ptr->identifier);
+		itoa(a, ptr->identifier, 10);
 		if (top == NULL){
 			top = ptr;
 			top->node = NULL;
@@ -93,6 +99,7 @@ class User {
 			top = ptr;
 		}
 	}
+	// Removes a chat for the user, requires identifier as a parameter
 	void removeChat(int a){
 		ChatIdentifier *ptr = top,*ptr1 = top;
 		itoa(a, ptr->identifier);
@@ -104,7 +111,7 @@ class User {
 		}
 		ptr1->node = ptr->node;
 		delete ptr;
-	}
+	} 
 	//Register function, returns 1 if unsuccessful else returns 0
 	int regUser() {
 		char usrname[40], pwd[40], pwdCh = '2';
@@ -122,10 +129,15 @@ class User {
 		strcpy(available, checkUser(usrname));
 		if (strcmp(available, "False") == 0) {
 			cout<<"Sorry! Username is taken";
-			cout<<"\nType any character to try again";
-			getch();
+			cout<<"\nType r to try again \nType any other character to go back to start screen";
+			char ch = getch();
 			clrscr();
-			regUser();
+			if (ch == 'r')
+				regUser();
+			else{
+				return 1;
+			}
+			
 		}
 		else{
 			// Password entry
@@ -183,9 +195,12 @@ char *checkUser(char usrname[]) {
 	User player;
 	while (user.read((char*)&player, sizeof(player))) {
 		// Checks if username is taken
-		if (strcmp(player.getUsername(), usrname) == 0)
+		if (strcmp(player.getUsername(), usrname) == 0) {
+			user.close();
 			return "False";
+		}
 	}
+	user.close();
 	return "True";
 }
 
