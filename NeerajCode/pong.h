@@ -24,6 +24,8 @@ int ntempx=-4;
 int velx=4;
 int tempx=4;
 int vely=-4;
+char arr1[12];
+char arr[12];
 char score[1]="1";
 int tempballx=300;
 
@@ -55,6 +57,9 @@ class Paddle{
 	void setY(int newY){
 		topYCo = newY;
 		bottomYCo = topYCo + 100;
+	}
+	void getTopYCo(){
+		return topYCo;
 	}
 };
 
@@ -102,6 +107,13 @@ class Ball{
 	void setVelY(int newVelY){
 		velY = newVelY;
 	}
+	int getVelX(){
+		return velX;
+	}
+	int getVelY(){
+		return velY;	
+	}
+
 };
 
 Paddle::Paddle(int startXCo){
@@ -227,7 +239,7 @@ void reset(Ball &ball, Paddle &leftPad, Paddle &rightPad){
 	//Draw everything:
 	leftPad.drawPaddle();
 	rightPad.drawPaddle();
-	ball.drawBall();
+	ball.drawBall(15);
 }
 
 void Text()
@@ -257,6 +269,7 @@ void Game()
 {
 	Text();
 	getch();
+	int key = 0;
 	cleardevice();
 	drawMap();
 	Paddle LeftPaddle(10);
@@ -267,9 +280,81 @@ void Game()
 	RightPaddle.drawPaddle();
 	while (1)
 	{
-		ball.MoveBall();
-		LeftPaddle.isColliding(ball.getX(), ball.getY());
-		RightPaddle.isColliding(ball.getX(), ball.getY());
+		ball.drawBall(0);
+		if (LeftPaddle.isColliding(ball.getX(), ball.getY())){
+			ball.setVelX(-1*ball.getVelX());
+		}
+		if (RightPaddle.isColliding(ball.getX(), ball.getY())){
+			ball.setVelX(-1*ball.getVelX());
+		}
+		if(ball.getX()>625){
+			ball.setVelX(2*ball.getVelX());
+			delay(100);
+			reset(ball, LeftPaddle, RightPaddle);
+			player1score++;
+			if(player1score==5){
+				setcolor(WHITE);
+				settextstyle(TRIPLEX_FONT,HORIZ_DIR,5);
+				outtextxy(180,175,"Player 1 wins");
+				getch();
+				exit(0);
+			}
+			reset(ball,LeftPaddle,RightPaddle);
+			getch();	
+		}
+		else if(ball.getX()<15){
+			ball.setVelX(2*ball.getVelX());
+			delay(100);
+			reset(ball, LeftPaddle, RightPaddle);
+			player2score++;
+			if(player2score==5){
+				setcolor(WHITE);
+				settextstyle(TRIPLEX_FONT,HORIZ_DIR,5);
+				outtextxy(180,175,"Player 2 wins");
+				getch();
+				exit(0);
+			}
+			reset(ball,LeftPaddle,RightPaddle);
+			getch();	
+
+		}
+		if(ball.getY()<10 || ball.getY() > 460){
+			ball.setVelY(-1*ball.getVelY())
+		}
+		ball.drawBall(15);
+		delay(40);
+		reset(ball,LeftPaddle,RightPaddle);
+		while(kbhit()){
+			key=getch();
+			if(key == 'W'||key == 'S')
+				key = tolower(key);
+			switch(key){
+
+				case 72:
+					if(RightPaddle.getTopYCo()!=10){
+						RightPaddle.moveUp();
+					}
+					break;
+
+				case 80:
+					if(RightPaddle.getTopYCo()!=370){
+						RightPaddle.moveDown();
+					}	
+					break;
+				case 119:
+					if(LeftPaddle.getTopYCo()!=10){
+						LeftPaddle.moveUp();
+					}	
+					break;
+				case 115:
+					if(LeftPaddle.getTopYCo()!=370){
+						LeftPaddle.moveDown();
+					}	
+					break;
+				case 27:
+					exit(0);	
+			}	
+		}
 	}
 }
 
