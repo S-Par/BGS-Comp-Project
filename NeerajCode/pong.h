@@ -280,7 +280,8 @@ void Game()
 	RightPaddle.drawPaddle();
 	while (1)
 	{
-		ball.drawBall(0);
+		ball.MoveBall();
+
 		if (LeftPaddle.isColliding(ball.getX(), ball.getY())){
 			ball.setVelX(-1*ball.getVelX());
 		}
@@ -321,7 +322,7 @@ void Game()
 		if(ball.getY()<10 || ball.getY() > 460){
 			ball.setVelY(-1*ball.getVelY())
 		}
-		ball.drawBall(15);
+		//ball.drawBall(15);
 		delay(40);
 		reset(ball,LeftPaddle,RightPaddle);
 		while(kbhit()){
