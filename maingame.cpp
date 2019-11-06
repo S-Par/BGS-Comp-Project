@@ -6,6 +6,7 @@
 #include <fstream.h>
 #include <stdlib.h>
 #include <string.h>
+#include "pong.h"
 
 //Function prototypes
 int registerUser(User &player);
@@ -52,11 +53,12 @@ int main() {
 	graphicsGameIntro(activeGame);
 	//as pong not yet complete
 	if (strcmp(activeGame,"pong")==0) {
-		return 0;
+		Game();
 	}
-
+	else{
 	//play pacman
 	pacmanGame(player);
+	}
 	/*
 	Reading from file, disabled till file is rewritten with new objects
 	fstream file("pacscore.txt", ios::in|ios::binary);
