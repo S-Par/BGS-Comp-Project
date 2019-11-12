@@ -4,7 +4,6 @@
  \
  ![Proton](/Images/ProtonScreen.png)
  ### Games
- \
  Proton has two games as of now. \
  \
  ![Proton](/Images/DualGames.png) \
