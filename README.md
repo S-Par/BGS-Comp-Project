@@ -1,6 +1,7 @@
  ## BGS-Comp-Project
  This is a project that provides a gaming portal. 
  Project is done for the CBSE Class 12 Examination.
+ ![Proton](https://imgur.com/a/AR5O4ln)
  ### Project Details
  Games provided:
  - Pac-man
