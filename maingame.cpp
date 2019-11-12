@@ -4,6 +4,7 @@
 #include "usrclass.h"
 #include "pacclass.h"
 #include <fstream.h>
+#include "pong.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -52,7 +53,8 @@ int main() {
 	graphicsGameIntro(activeGame);
 	//as pong not yet complete
 	if (strcmp(activeGame,"pong")==0) {
-		return 0;
+		startGraphicsMode();
+		Game();
 	}
 
 	//play pacman
