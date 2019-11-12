@@ -1,6 +1,5 @@
- ## BGS-Comp-Project
- This is a project that provides a gaming portal. 
- Project is done for the CBSE Class 12 Examination.
+ ## Proton
+ This is Proton. An arcade designed for Borland's Turbo C++.
  ![Proton](/Images/ProtonScreen.png)
  ### Project Details
  Games provided:
