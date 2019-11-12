@@ -1,5 +1,7 @@
  ## Proton
- This is Proton. An arcade designed for Borland's Turbo C++.
+ This is Proton. \ 
+ An arcade designed for Borland's Turbo C++. \
+ \
  ![Proton](/Images/ProtonScreen.png)
  ### Project Details
  Games provided:
