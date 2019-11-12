@@ -40,15 +40,9 @@ int main() {
 			goto start;
 		}
 	}
-	/*
-	fstream userfile("userobj.txt", ios::in|ios::binary);
-	while (userfile.read((char *)&player, sizeof(player))){
-		cout<<player.getUsername()<<endl;
-		getch();
-	}
-	userfile.close();
-	*/
-	//introduction
+
+	//Game selection
+	game:
 	char activeGame[7] = "pacman";
 	graphicsGameIntro(activeGame);
 	//as pong not yet complete
@@ -59,15 +53,6 @@ int main() {
 		//play pacman
 		pacmanGame(player);
 	}
-	/*
-	Reading from file, disabled till file is rewritten with new objects
-	fstream file("pacscore.txt", ios::in|ios::binary);
-	Pacman obj;
-	while (file.read((char*)&obj, sizeof(obj))){
-		cout<<"\nScore:"<<obj.getScore();
-	}
-	file.close();
-	*/
 	getch();
 	return 0;
 }
@@ -106,8 +91,11 @@ void pacmanGame(User &player) {
 	// clean up
 	closegraph();
 
-	/*
-	Temporarily commented till new file created
+	// Sets user object's high score
+	if (player.getPacmanHighScore() < pac.getScore()){
+		player.setPacmanHighScore(pac.getScore());
+	}
+
 	//Creating objects for file reading
 	Pacman pacm[10],obj;
 	int i = 0;
@@ -135,16 +123,14 @@ void pacmanGame(User &player) {
 	}
 	//close file
 	file.close();
-	*/
-	fstream output("pacscore.txt", ios::app | ios::binary);
-	output.write((char *)&pac, sizeof(pac));
-	output.close();
 
-	fstream input("pacscore.txt", ios::in | ios::binary);
-	while(input.read((char *)&pac, sizeof(pac))) {
-		cout<<pac.getName()<<" "<<pac.getScore()<<endl;
+	//Display Leaderboard
+	cout<<"\t\t\t\tLEADERBOARD\n\n\n";
+	for (i = 0; i < 10; i++) {
+		cout<<"\t"<<pacm[i].getName()<<" "<<pacm[i].getScore();
+		cout<<endl;
 	}
-	input.close();
+
 }
 
 // Registers a user object, if unsuccessful returns 1
