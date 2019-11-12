@@ -56,8 +56,8 @@ int main() {
 		Game();
 	}
 	else{
-	//play pacman
-	pacmanGame(player);
+		//play pacman
+		pacmanGame(player);
 	}
 	/*
 	Reading from file, disabled till file is rewritten with new objects

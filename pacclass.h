@@ -117,8 +117,8 @@ void instructions()
 	setcolor(YELLOW);
 	settextstyle(TRIPLEX_FONT, 0, 3);
 	outtextxy(100, 60, "INSTRUCTIONS:");
-	setcolor(LIGHTGREEN)
 	settextstyle(TRIPLEX_FONT, 0, 1);
+	setcolor(LIGHTGREEN);
 	outtextxy(50, 90, "1.THIS is Pac-Man:");
 	setcolor(YELLOW);
 	setfillstyle(SOLID_FILL, YELLOW);
@@ -805,12 +805,12 @@ void Ghost::ghostMove(){
 		i = convertYco(yco - 10);
 		//Setting counter to map value of array
 		counter = mapCo[i][j];
+		prevYco = yco;
 		//If array coordinate is not wall, then move
 		if (counter != 0){
 			//erasing previous position
 			ghostErase();
 			//decrement yco to move up
-			prevYco = yco; 
 			setYco(getYco() - 10);
 			//drawing ghost at new position
 			ghostDraw();
@@ -834,12 +834,12 @@ void Ghost::ghostMove(){
 		i = convertYco(getYco());
 		//Setting counter to map value of array
 		counter = mapCo[i][j];
+		prevXco = xco;
 		//If array coordinate is not wall or teleport point, then move ten spaces
 		if (counter != 0 && counter != 3){
 			//erasing previous position
 			ghostErase();
 			//decrement xco to move left
-			prevXco = xco;
 			setXco(getXco()-10);
 			//drawing ghost at new position
 			ghostDraw();
@@ -872,6 +872,7 @@ void Ghost::ghostMove(){
 		i = convertYco(getYco() + 10);
 		//Setting counter to map value of array
 		counter = mapCo[i][j];
+		prevYco = yco;
 		//If array coordinate is not wall, then move
 		if (counter != 0){
 			//erasing previous position
@@ -901,6 +902,7 @@ void Ghost::ghostMove(){
 		i = convertYco(getYco());
 		//Setting counter to map value of array
 		counter = mapCo[i][j];
+		prevXco = xco;
 		//If array coordinate is not wall or teleport point, then move 10 spaces
 		if (counter != 0 && counter != 3){
 			//erasing previous position
