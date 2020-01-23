@@ -130,23 +130,6 @@ void Game(){
 	//Game runs till one player scores 5
 	while(1){
 		drawball(0);
-		/*
-		For random directions:
-		int a = random(2);
-		if (a == 1){
-			velx is +ve
-		}
-		else{
-			velx is -ve
-		}
-		a = random(2);
-		if (a == 1){
-			vely is +ve
-		}
-		else{
-			vely is -ve
-		}
-		*/
 		ballx+=velx;
 		bally+=vely;
 
